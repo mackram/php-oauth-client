@@ -85,6 +85,15 @@ class TokenRequest
                 }
             }
 
+            // if the field "scope" is empty string a default can be set
+            // through the client configuration
+            // issue: https://github.com/fkooman/php-oauth-client/issues/20
+            if (null !== $this->clientConfig->getDefaultServerScope()) {
+                if (is_array($responseData) && isset($responseData['scope']) && '' === $responseData['scope']) {
+                    $responseData['scope'] = $this->clientConfig->getDefaultServerScope();
+                }
+            }
+
             return new TokenResponse($responseData);
         } catch (\Guzzle\Common\Exception\RuntimeException $e) {
             return false;

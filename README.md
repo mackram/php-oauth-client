@@ -113,6 +113,10 @@ violating services are:
   `client_id` and `client_secret` POST body fields to specify the credentials.
   This option will also make it possible to allow for the `client_id` to have 
   a colon (`:`) in it. AS with this behavior: Google, SurveyMonkey.
+* `default_server_scope` in case the server returns a specification violating
+  empty string as `scope`. This will override the scope value allowing you to
+  set one. It will *ONLY* be set when the server scope is an empty string, not
+  as a default in all situations! AS with this behavior: Nationbuilder.
 
 ## Initializing the API
 Now you can initialize the `Api` object:

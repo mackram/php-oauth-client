@@ -31,6 +31,7 @@ class ClientConfig implements ClientConfigInterface
     private $defaultTokenType;
     private $allowNullExpiresIn;
     private $enableDebug;
+    private $defaultServerScope;
 
     public function __construct(array $data)
     {
@@ -57,6 +58,9 @@ class ClientConfig implements ClientConfigInterface
 
         $allowNullExpiresIn = array_key_exists('allow_null_expires_in', $data) ? $data['allow_null_expires_in'] : false;
         $this->setAllowNullExpiresIn($allowNullExpiresIn);
+
+        $defaultServerScope = array_key_exists('default_server_scope', $data) ? $data['default_server_scope'] : null;
+        $this->setDefaultServerScope($defaultServerScope);
 
         $enableDebug = array_key_exists('enable_debug', $data) ? $data['enable_debug'] : false;
         $this->setEnableDebug($enableDebug);
@@ -150,6 +154,21 @@ class ClientConfig implements ClientConfigInterface
     public function getDefaultTokenType()
     {
         return $this->defaultTokenType;
+    }
+
+    public function setDefaultServerScope($defaultServerScope)
+    {
+        if (null !== $defaultServerScope) {
+            if (!is_string($defaultServerScope) || 0 >= strlen($defaultServerScope)) {
+                throw new ClientConfigException("default_server_scope must be a non-empty string or null");
+            }
+        }
+        $this->defaultServerScope = $defaultServerScope;
+    }
+
+    public function getDefaultServerScope()
+    {
+        return $this->defaultServerScope;
     }
 
     public function setAllowNullExpiresIn($allowNullExpiresIn)
