@@ -32,6 +32,7 @@ class ClientConfig implements ClientConfigInterface
     private $allowNullExpiresIn;
     private $enableDebug;
     private $defaultServerScope;
+    private $useRedirectUriOnRefreshTokenRequest;
 
     public function __construct(array $data)
     {
@@ -58,6 +59,9 @@ class ClientConfig implements ClientConfigInterface
 
         $allowNullExpiresIn = array_key_exists('allow_null_expires_in', $data) ? $data['allow_null_expires_in'] : false;
         $this->setAllowNullExpiresIn($allowNullExpiresIn);
+
+        $useRedirectUriOnRefreshTokenRequest = array_key_exists('use_redirect_uri_on_refresh_token_request', $data) ? $data['use_redirect_uri_on_refresh_token_request'] : false;
+        $this->setUseRedirectUriOnRefreshTokenRequest($useRedirectUriOnRefreshTokenRequest);
 
         $defaultServerScope = array_key_exists('default_server_scope', $data) ? $data['default_server_scope'] : null;
         $this->setDefaultServerScope($defaultServerScope);
@@ -179,6 +183,16 @@ class ClientConfig implements ClientConfigInterface
     public function getAllowNullExpiresIn()
     {
         return $this->allowNullExpiresIn;
+    }
+
+    public function setUseRedirectUriOnRefreshTokenRequest($useRedirectUriOnRefreshTokenRequest)
+    {
+        $this->useRedirectUriOnRefreshTokenRequest = (bool) $useRedirectUriOnRefreshTokenRequest;
+    }
+
+    public function getUseRedirectUriOnRefreshTokenRequest()
+    {
+        return $this->useRedirectUriOnRefreshTokenRequest;
     }
 
     public function setEnableDebug($enableDebug)

@@ -117,6 +117,9 @@ violating services are:
   empty string as `scope`. This will override the scope value allowing you to
   set one. It will *ONLY* be set when the server scope is an empty string, not
   as a default in all situations! AS with this behavior: Nationbuilder.
+* `use_redirect_uri_on_refresh_token_request` in case the server requires you 
+  to also provide the redirect_uri parameter on a refresh_token request. AS 
+  with this behavior: Nationbuilder.
 
 ## Initializing the API
 Now you can initialize the `Api` object:
