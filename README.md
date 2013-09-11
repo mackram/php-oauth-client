@@ -1,3 +1,5 @@
+[![Build Status](https://www.travis-ci.org/fkooman/php-oauth-client.png?branch=master)](https://www.travis-ci.org/fkooman/php-oauth-client)
+
 # Introduction
 This project provides an OAuth 2.0 "Authorization Code Grant" client as 
 described in RFC 6749, section 4.1.
