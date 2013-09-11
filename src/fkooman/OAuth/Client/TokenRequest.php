@@ -50,7 +50,7 @@ class TokenRequest
         // Some services require specifying the redirect_uri also when using
         // the refresh_token.
         // issue: https://github.com/fkooman/php-oauth-client/issues/20
-        if ($this->clientConfig->useRedirectUriOnRefreshTokenRequest()) {
+        if ($this->clientConfig->getUseRedirectUriOnRefreshTokenRequest()) {
             if (null !== $this->clientConfig->getRedirectUri()) {
                 $p['redirect_uri'] = $this->clientConfig->getRedirectUri();
             }
