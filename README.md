@@ -301,3 +301,12 @@ You can use the following snippet:
 
 Now you can feed the `$httpClient` to the `Api` and `Callback` classes and the
 requests and responses including their bodies will be logged.
+
+# Tests
+In order to run the tests you can use [PHPUnit](http://phpunit.de). You can run 
+the tests like this:
+
+    $ php /path/to/phpunit.phar tests
+
+from the directory. Make sure you first run 
+`php /path/to/composer.phar install` before running the tests.

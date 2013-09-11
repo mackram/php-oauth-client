@@ -1,11 +1,23 @@
 <?php
 
-require_once 'vendor/autoload.php';
+/**
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-use \fkooman\OAuth\Client\ClientConfig;
-use \fkooman\OAuth\Client\ClientConfigException;
+namespace fkooman\OAuth\Client;
 
-class ClientConfigTest extends PHPUnit_Framework_TestCase
+class ClientConfigTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testSimple()
@@ -22,7 +34,7 @@ class ClientConfigTest extends PHPUnit_Framework_TestCase
 
     public function testLessSimple()
     {
-        $data = array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token", "redirect_uri" => "http://www.example.org/callback", "credentials_in_request_body" => TRUE);
+        $data = array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token", "redirect_uri" => "http://www.example.org/callback", "credentials_in_request_body" => true);
         $c = new ClientConfig($data);
         $this->assertEquals("foo", $c->getClientId());
         $this->assertEquals("bar", $c->getClientSecret());
@@ -48,7 +60,7 @@ class ClientConfigTest extends PHPUnit_Framework_TestCase
     {
         try {
             new ClientConfig($data);
-            $this->assertTrue(FALSE);
+            $this->assertTrue(false);
         } catch (ClientConfigException $e) {
             $this->assertEquals($message, $e->getMessage());
         }
@@ -61,7 +73,7 @@ class ClientConfigTest extends PHPUnit_Framework_TestCase
               array ("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token"),
             ),
             array(
-              array ("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token", "credentials_in_request_body" => TRUE, "redirect_uri" => "http://www.example.org/callback"),
+              array ("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token", "credentials_in_request_body" => true, "redirect_uri" => "http://www.example.org/callback"),
             ),
             array(
               array ("foo" => "bar", "xyz" => "abc", "client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token"),
