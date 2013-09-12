@@ -24,43 +24,57 @@ use Guzzle\Http\Message\Response;
 
 class TokenRequestTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var array */
+    private $clientConfig;
 
-    public function testSimpleClient()
+    /** @var array */
+    private $tokenResponse;
+
+    public function setUp()
+    {
+        $this->clientConfig = array();
+        $this->tokenResponse = array();
+
+        $this->clientConfig[] = new ClientConfig(
+            array(
+                "client_id" => "foo",
+                "client_secret" => "bar",
+                "authorize_endpoint" => "http://www.example.org/authorize",
+                "token_endpoint" => "http://www.example.org/token"
+            )
+        );
+
+        $this->clientConfig[] = new ClientConfig(
+            array(
+                "client_id" => "foo",
+                "client_secret" => "bar",
+                "authorize_endpoint" => "http://www.example.org/authorize",
+                "token_endpoint" => "http://www.example.org/token",
+                "redirect_uri" => "http://foo.example.org/callback",
+                "credentials_in_request_body" => true
+            )
+        );
+
+        $this->tokenResponse[] = json_encode(
+            array(
+                "access_token" => "foo",
+                "token_type" => "Bearer"
+            )
+        );
+
+        $this->tokenResponse[] = "{";
+    }
+
+    public function testWithAuthorizationCode()
     {
         $client = new Client();
         $mock = new MockPlugin();
-        $mock->addResponse(
-            new Response(
-                200,
-                null,
-                json_encode(
-                    array(
-                        "access_token" => "foo",
-                        "token_type" => "Bearer",
-                        "expires_in" => 5,
-                        "scope" => "foo",
-                        "refresh_token" => "bar",
-                        "unsupported_key" => "foo",
-                    )
-                )
-            )
-        );
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[0]));
         $client->addSubscriber($mock);
         $history = new HistoryPlugin();
         $history->setLimit(5);
         $client->addSubscriber($history);
-
-        $tokenRequest = new TokenRequest(
-            $client,
-            new ClientConfig(
-                array(
-                    "client_id" => "foo",
-                    "client_secret" => "bar",
-                    "authorize_endpoint" => "http://www.example.org/authorize",
-                    "token_endpoint" => "http://www.example.org/token"
-                )
-            )
-        );
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[0]);
         $tokenRequest->withAuthorizationCode("12345");
         $lastRequest = $history->getLastRequest();
         $this->assertEquals("POST", $lastRequest->getMethod());
@@ -70,5 +84,65 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             "application/x-www-form-urlencoded; charset=utf-8",
             $lastRequest->getHeader("Content-Type")
         );
+    }
+
+    public function testWithAuthorizationCodeCredentialsInRequestBody()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[0]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[1]);
+        $tokenRequest->withAuthorizationCode("12345");
+        $lastRequest = $history->getLastRequest();
+        $this->assertEquals("POST", $lastRequest->getMethod());
+        $this->assertEquals(
+            "code=12345&grant_type=authorization_code&redirect_uri=http%3A%2F%2Ffoo.example.org%2Fcallback&client_id=foo&client_secret=bar",
+            $lastRequest->getPostFields()->__toString()
+        );
+        $this->assertEquals(
+            "application/x-www-form-urlencoded; charset=utf-8",
+            $lastRequest->getHeader("Content-Type")
+        );
+    }
+
+    public function testWithRefreshToken()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[0]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[0]);
+        $tokenRequest->withRefreshToken("refresh_123_456");
+        $lastRequest = $history->getLastRequest();
+        $this->assertEquals("POST", $lastRequest->getMethod());
+        $this->assertEquals("Basic Zm9vOmJhcg==", $lastRequest->getHeader("Authorization"));
+        $this->assertEquals(
+            "refresh_token=refresh_123_456&grant_type=refresh_token",
+            $lastRequest->getPostFields()->__toString()
+        );
+        $this->assertEquals(
+            "application/x-www-form-urlencoded; charset=utf-8",
+            $lastRequest->getHeader("Content-Type")
+        );
+    }
+
+    public function testBrokenJsonResponse()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[1]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[0]);
+        $this->assertFalse($tokenRequest->withRefreshToken("refresh_123_456"));
     }
 }
