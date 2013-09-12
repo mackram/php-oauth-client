@@ -1,5 +1,13 @@
 # Release History
 
+## 0.3.2
+* Add support for default_server_scope ClientConfig parameter for Nationbuilder 
+  (issue #20)
+* Add support for use_redirect_uri_on_refresh_token_request ClientConfig 
+  parameter for Nationbuilder (issue #20) 
+* Delete old refresh_token if a new one is obtained on getting a new 
+  access_token (issue #20)
+
 ## 0.3.1
 * Update README with information on how to do (token request) logging
 * Support OAuth 2.0 AS which provides an invalid `expires_in` value (issue #17)
