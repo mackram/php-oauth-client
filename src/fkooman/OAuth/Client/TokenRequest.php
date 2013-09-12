@@ -19,7 +19,10 @@ namespace fkooman\OAuth\Client;
 
 class TokenRequest
 {
+    /** @var \Guzzle\Http\Client */
     private $c;
+
+    /** @var \fkooman\OAuth\Client\ClientConfigInterface */
     private $clientConfig;
 
     public function __construct(\Guzzle\Http\Client $c, ClientConfigInterface $clientConfig)
