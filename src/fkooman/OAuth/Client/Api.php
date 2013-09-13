@@ -42,7 +42,7 @@ class Api
     public function setClientConfigId($clientConfigId)
     {
         if (!is_string($clientConfigId) || 0 >= strlen($clientConfigId)) {
-            throw new ApiException("clientConfigId should be a non-empty string");
+            throw new ApiException("clientConfigId must be a non-empty string");
         }
         $this->clientConfigId = $clientConfigId;
     }
@@ -170,7 +170,7 @@ class Api
             $stateValue = bin2hex(openssl_random_pseudo_bytes(self::RANDOM_LENGTH));
         } else {
             if (!is_string($stateValue) || 0 >= strlen($stateValue)) {
-                throw new ApiException("state should be a non-empty string");
+                throw new ApiException("state must be a non-empty string");
             }
         }
 
