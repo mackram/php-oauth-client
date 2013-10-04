@@ -42,15 +42,13 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAccessTokenWithoutToken()
     {
+        $mockStorage = new MockStorage();
         $client = new Client();
         $mock = new MockPlugin();
         $mock->addResponse(new Response(200));
         $client->addSubscriber($mock);
 
-        $mockStorage = new MockStorage();
-
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-
         $context = new Context("a_user", new Scope("foo bar"));
 
         $this->assertFalse($api->getAccessToken($context));
@@ -60,14 +58,12 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessTokenWithToken()
     {
         $mockStorage = new MockStorage();
-
         $client = new Client();
         $mock = new MockPlugin();
         $mock->addResponse(new Response(200));
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-
         $context = new Context("a_user", new Scope("foo bar"));
 
         $accessToken = new AccessToken(
@@ -87,4 +83,54 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("my_token_value", $accessToken->getAccessToken());
     }
 
+    public function testGetAccessTokenWithExpiredAccessTokenAndRefreshToken()
+    {
+        $mockStorage = new MockStorage();
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(
+            new Response(
+                200,
+                null,
+                json_encode(
+                    array(
+                        "access_token" => "my_new_access_token_value",
+                        "token_type" => "Bearer"
+                    )
+                )
+            )
+        );
+        $client->addSubscriber($mock);
+
+        $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
+        $context = new Context("a_user", new Scope("foo bar"));
+
+        $accessToken = new AccessToken(
+            array(
+                "client_config_id" => "foo",
+                "user_id" => "a_user",
+                "token_type" => "bearer",
+                "access_token" => "my_token_value",
+                "scope" => new Scope("foo bar"),
+                "issue_time" => time() - 4000,
+                "expires_in" => 3600
+            )
+        );
+        $mockStorage->storeAccessToken($accessToken);
+
+        $refreshToken = new RefreshToken(
+            array(
+                "client_config_id" => "foo",
+                "user_id" => "a_user",
+                "refresh_token" => "my_refresh_token_value",
+                "scope" => new Scope("foo bar"),
+                "issue_time" => time() - 10000,
+            )
+        );
+        $mockStorage->storeRefreshToken($refreshToken);
+
+        $accessToken = $api->getAccessToken($context);
+        $this->assertEquals("my_new_access_token_value", $accessToken->getAccessToken());
+        //$this->assertFalse($accessToken);
+    }
 }
