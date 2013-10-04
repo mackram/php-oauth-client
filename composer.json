@@ -19,5 +19,8 @@
         "guzzle/guzzle": "3.7.*",
         "monolog/monolog": "1.6.*",
         "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "sami/sami": "v1.1"
     }
 }
