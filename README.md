@@ -114,7 +114,7 @@ violating services are:
   authentication on the token endpoint. This will force the client to use
   `client_id` and `client_secret` POST body fields to specify the credentials.
   This option will also make it possible to allow for the `client_id` to have 
-  a colon (`:`) in it. AS with this behavior: Google, SurveyMonkey.
+  a colon (`:`) in it. AS with this behavior: Google, SurveyMonkey, GitHub.
 * `default_server_scope` in case the server returns a specification violating
   empty string as `scope`. This will override the scope value allowing you to
   set one. It will *ONLY* be set when the server scope is an empty string, not
