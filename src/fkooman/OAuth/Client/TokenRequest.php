@@ -75,7 +75,11 @@ class TokenRequest
         }
 
         try {
-            $responseData = $this->c->post($this->clientConfig->getTokenEndpoint())->addPostFields($p)->send()->json();
+            $request = $this->c->post($this->clientConfig->getTokenEndpoint());
+            $request->addPostFields($p);
+            $request->addHeader('Accept', 'application/json');
+
+            $responseData = $request->send()->json();
 
             // some servers do not provide token_type, so we allow for setting
             // a default
