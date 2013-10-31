@@ -1,5 +1,8 @@
 # Release History
 
+## 0.3.3
+* Fix bug with GitHub by setting `Accept` header to `application/json`
+
 ## 0.3.2
 * Add support for default_server_scope ClientConfig parameter for Nationbuilder 
   (issue #20)
