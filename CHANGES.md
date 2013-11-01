@@ -1,6 +1,8 @@
 # Release History
 
-## 0.3.4
+## 0.4.0
+* **BREAKS API**
+** Context now has `array` as second parameter instead of `Scope`.
 * Remove embedded `Scope` class and use php-oauth-lib-common instead
 
 ## 0.3.3

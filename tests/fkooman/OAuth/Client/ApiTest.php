@@ -51,7 +51,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", Scope::fromString("foo bar"));
+        $context = new Context("a_user", array("foo", "bar"));
 
         $this->assertFalse($api->getAccessToken($context));
         $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=foo+bar", $api->getAuthorizeUri($context, "my_custom_state"));
@@ -66,7 +66,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", Scope::fromString("foo bar"));
+        $context = new Context("a_user", array("foo", "bar"));
 
         $accessToken = new AccessToken(
             array(
@@ -105,7 +105,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", Scope::fromString("foo bar"));
+        $context = new Context("a_user", array("foo", "bar"));
 
         $accessToken = new AccessToken(
             array(

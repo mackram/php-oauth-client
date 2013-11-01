@@ -148,7 +148,7 @@ Before you can call these methods you need to create a `Context` object to
 specify for which user you are requesting this access token and what the scope 
 is you want to request at the authorization server.
 
-    $context = new Context("john.doe@example.org", new Scope("read"));
+    $context = new Context("john.doe@example.org", array("read"));
     
 This means that you will request a token bound to `john.doe@example.org` with 
 the scope `read`. The user you specify here is typically the user identifier 
@@ -157,7 +157,7 @@ protected resource. At your service the user can for example be
 `john.doe@example.org`. This identifier is in no way related to the identity
 of the user at the remote service, it is just used for book keeping the 
 access tokens. If you do not want to request any particular scope you can use
-`new Scope()`.
+`array()`.
 
 Now you can see if an access token is already available:
 

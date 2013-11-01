@@ -21,10 +21,13 @@ use fkooman\OAuth\Common\Scope;
 
 class Context
 {
+    /** @var string */
     private $userId;
+
+    /** @var fkooman\OAuth\Common\Scope */
     private $scope;
 
-    public function __construct($userId, Scope $scope)
+    public function __construct($userId, array $scope)
     {
         $this->setUserId($userId);
         $this->setScope($scope);
@@ -43,9 +46,9 @@ class Context
         return $this->userId;
     }
 
-    public function setScope(Scope $scope)
+    public function setScope(array $scope)
     {
-        $this->scope = $scope;
+        $this->scope = new Scope($scope);
     }
 
     public function getScope()
