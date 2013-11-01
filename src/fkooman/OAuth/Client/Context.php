@@ -27,7 +27,7 @@ class Context
     /** @var fkooman\OAuth\Common\Scope */
     private $scope;
 
-    public function __construct($userId, array $scope)
+    public function __construct($userId, array $scope = array())
     {
         $this->setUserId($userId);
         $this->setScope($scope);
