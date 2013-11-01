@@ -1,5 +1,8 @@
 # Release History
 
+## 0.3.4
+* Remove embedded `Scope` class and use php-oauth-lib-common instead
+
 ## 0.3.3
 * Fix bug with GitHub by setting `Accept` header to `application/json`
 

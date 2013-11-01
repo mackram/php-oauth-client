@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Common\Scope;
+
 use Guzzle\Http\Client;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
@@ -67,7 +69,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 "client_config_id" => "foo",
                 "issue_time" => time() - 100,
                 "user_id" => "my_user_id",
-                "scope" => new Scope("foo bar")
+                "scope" => Scope::fromString("foo bar")
             )
         );
         $mockStorage->storeState($state);

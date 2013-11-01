@@ -197,8 +197,8 @@ class Api
 
         // scope
         $contextScope = $context->getScope();
-        if (!$contextScope->isEmptyScope()) {
-            $q['scope'] = $contextScope->getScopeAsString();
+        if (!$contextScope->isEmpty()) {
+            $q['scope'] = $contextScope->toString();
         }
 
         // redirect_uri

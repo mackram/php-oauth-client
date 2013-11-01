@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Common\Scope;
+
 use Guzzle\Http\Client;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
@@ -49,10 +51,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", new Scope("foo bar"));
+        $context = new Context("a_user", Scope::fromString("foo bar"));
 
         $this->assertFalse($api->getAccessToken($context));
-        $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=bar+foo", $api->getAuthorizeUri($context, "my_custom_state"));
+        $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=foo+bar", $api->getAuthorizeUri($context, "my_custom_state"));
     }
 
     public function testGetAccessTokenWithToken()
@@ -64,7 +66,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", new Scope("foo bar"));
+        $context = new Context("a_user", Scope::fromString("foo bar"));
 
         $accessToken = new AccessToken(
             array(
@@ -72,7 +74,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "user_id" => "a_user",
                 "token_type" => "bearer",
                 "access_token" => "my_token_value",
-                "scope" => new Scope("foo bar"),
+                "scope" => Scope::fromString("foo bar"),
                 "issue_time" => time() - 100,
                 "expires_in" => 3600
             )
@@ -103,7 +105,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client->addSubscriber($mock);
 
         $api = new Api("foo", $this->clientConfig[0], $mockStorage, $client);
-        $context = new Context("a_user", new Scope("foo bar"));
+        $context = new Context("a_user", Scope::fromString("foo bar"));
 
         $accessToken = new AccessToken(
             array(
@@ -111,7 +113,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "user_id" => "a_user",
                 "token_type" => "bearer",
                 "access_token" => "my_token_value",
-                "scope" => new Scope("foo bar"),
+                "scope" => Scope::fromString("foo bar"),
                 "issue_time" => time() - 4000,
                 "expires_in" => 3600
             )
@@ -123,7 +125,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "client_config_id" => "foo",
                 "user_id" => "a_user",
                 "refresh_token" => "my_refresh_token_value",
-                "scope" => new Scope("foo bar"),
+                "scope" => Scope::fromString("foo bar"),
                 "issue_time" => time() - 10000,
             )
         );

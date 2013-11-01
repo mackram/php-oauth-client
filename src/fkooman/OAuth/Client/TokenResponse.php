@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Common\Scope;
+
 class TokenResponse
 {
     private $accessToken;
@@ -103,10 +105,7 @@ class TokenResponse
 
     public function setScope($scope)
     {
-        if (!is_string($scope) || 0 >= strlen($scope)) {
-            throw new TokenResponseException("scope needs to be a non-empty string");
-        }
-        $this->scope = new Scope($scope);
+        $this->scope = Scope::fromString($scope);
     }
 
     public function getScope()

@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Common\Scope;
+
 class Token
 {
     /** @var string */

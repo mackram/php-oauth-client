@@ -36,7 +36,7 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Bearer", $t->getTokenType());
         $this->assertEquals(5, $t->getExpiresIn());
         $this->assertEquals("bar", $t->getRefreshToken());
-        $this->assertEquals("foo", $t->getScope()->getScopeAsString());
+        $this->assertEquals("foo", $t->getScope()->toString());
     }
 
     public function testScope()
@@ -49,12 +49,12 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
             )
         );
         // scope will be sorted de-duplicated string space separated
-        $this->assertEquals("bar baz foo", $t->getScope()->getScopeAsString());
+        $this->assertEquals("foo bar baz baz", $t->getScope()->toString());
     }
 
     /**
-     * @expectedException \fkooman\OAuth\Client\TokenResponseException
-     * @expectedExceptionMessage scope needs to be a non-empty string
+     * @expectedException fkooman\OAuth\Common\Exception\ScopeException
+     * @expectedExceptionMessage provided scope must be non empty string
      */
     public function testNullScope()
     {
@@ -68,8 +68,8 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \fkooman\OAuth\Client\TokenResponseException
-     * @expectedExceptionMessage scope needs to be a non-empty string
+     * @expectedException fkooman\OAuth\Common\Exception\ScopeException
+     * @expectedExceptionMessage provided scope must be non empty string
      */
     public function testEmptyScope()
     {
