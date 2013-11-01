@@ -17,6 +17,7 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Common\Scope;
 use PDO;
 
 class PdoStorage implements StorageInterface
@@ -39,7 +40,7 @@ class PdoStorage implements StorageInterface
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false !== $result) {
-            $result['scope'] = new Scope($result['scope']);
+            $result['scope'] = Scope::fromString($result['scope']);
 
             return new AccessToken($result);
         }
@@ -84,7 +85,7 @@ class PdoStorage implements StorageInterface
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false !== $result) {
-            $result['scope'] = new Scope($result['scope']);
+            $result['scope'] = Scope::fromString($result['scope']);
 
             return new RefreshToken($result);
         }
@@ -126,7 +127,7 @@ class PdoStorage implements StorageInterface
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false !== $result) {
-            $result['scope'] = new Scope($result['scope']);
+            $result['scope'] = Scope::fromString($result['scope']);
 
             return new State($result);
         }
