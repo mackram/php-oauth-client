@@ -54,7 +54,7 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException fkooman\OAuth\Common\Exception\ScopeException
-     * @expectedExceptionMessage provided scope must be non empty string
+     * @expectedExceptionMessage provided scope must be string
      */
     public function testNullScope()
     {
@@ -68,8 +68,8 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException fkooman\OAuth\Common\Exception\ScopeException
-     * @expectedExceptionMessage provided scope must be non empty string
+     * @expectedException fkooman\OAuth\Client\TokenResponseException
+     * @expectedExceptionMessage scope must be non empty
      */
     public function testEmptyScope()
     {
@@ -83,7 +83,7 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \fkooman\OAuth\Client\TokenResponseException
+     * @expectedException fkooman\OAuth\Client\TokenResponseException
      * @expectedExceptionMessage expires_in needs to be a positive integer
      */
     public function testNegativeExpiresIn()

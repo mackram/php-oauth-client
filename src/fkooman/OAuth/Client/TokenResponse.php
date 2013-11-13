@@ -105,7 +105,11 @@ class TokenResponse
 
     public function setScope($scope)
     {
-        $this->scope = Scope::fromString($scope);
+        $scope = Scope::fromString($scope);
+        if ($scope->isEmpty()) {
+            throw new TokenResponseException("scope must be non empty");
+        }
+        $this->scope = $scope;
     }
 
     public function getScope()
