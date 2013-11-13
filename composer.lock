@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "fkooman/php-oauth-lib-common",
-            "version": "0.3.1",
+            "version": "0.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-oauth-lib-common.git",
-                "reference": "59fdd4b6c1f1dee1d84687ee5c8be44df621cbdd"
+                "reference": "9ece2afedcdf90f431c13e4ba2b699c97d303fc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-oauth-lib-common/zipball/59fdd4b6c1f1dee1d84687ee5c8be44df621cbdd",
-                "reference": "59fdd4b6c1f1dee1d84687ee5c8be44df621cbdd",
+                "url": "https://api.github.com/repos/fkooman/php-oauth-lib-common/zipball/9ece2afedcdf90f431c13e4ba2b699c97d303fc0",
+                "reference": "9ece2afedcdf90f431c13e4ba2b699c97d303fc0",
                 "shasum": ""
             },
             "require": {
@@ -40,7 +40,7 @@
                 }
             ],
             "description": "PHP library for common OAuth classes.",
-            "time": "2013-11-01 13:15:00"
+            "time": "2013-11-09 09:48:35"
         },
         {
             "name": "guzzle/guzzle",
