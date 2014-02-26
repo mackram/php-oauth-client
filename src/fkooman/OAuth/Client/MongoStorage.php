@@ -125,7 +125,7 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->remove(array(
             'client_config_id' => $refreshToken->getClientConfigId(),
             'user_id'          => $refreshToken->getUserId(),
-            'access_token'     => $refreshToken->getRefreshToken()
+            'refresh_token'     => $refreshToken->getRefreshToken()
         ));
 
         return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
