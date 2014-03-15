@@ -183,6 +183,7 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
                 'state' => $state->getState()
             )
         );
+
         return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
     }
 }
