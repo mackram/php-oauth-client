@@ -54,7 +54,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $context = new Context("a_user", array("foo", "bar"));
 
         $this->assertFalse($api->getAccessToken($context));
-        $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=foo+bar", $api->getAuthorizeUri($context, "my_custom_state"));
+        $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=bar+foo", $api->getAuthorizeUri($context, "my_custom_state"));
     }
 
     public function testGetAccessTokenWithToken()

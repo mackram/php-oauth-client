@@ -304,15 +304,6 @@ You can use the following snippet:
 Now you can feed the `$httpClient` to the `Api` and `Callback` classes and the
 requests and responses including their bodies will be logged.
 
-# API
-The API documenation can be generated using
-[Sami](http://sami.sensiolabs.org/), Sami is part of the `require-dev` section
-in the Composer file.
-
-    $ php vendor/bin/sami.php update doc/php-oauth-client.php
-
-This will output HTML in the `build/` directory.
-
 # Tests
 In order to run the tests you can use [PHPUnit](http://phpunit.de). You can run 
 the tests like this:

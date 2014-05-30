@@ -39,7 +39,7 @@ class Callback
         }
         $this->clientConfigId = $clientConfigId;
     }
-    
+
     public function getClientConfigId()
     {
         return $this->clientConfigId;
@@ -49,8 +49,8 @@ class Callback
     {
         $this->clientConfig = $clientConfig;
     }
-    
-    public function getClientConfig() 
+
+    public function getClientConfig()
     {
         return $this->getClientConfig;
     }
@@ -59,18 +59,18 @@ class Callback
     {
         $this->tokenStorage = $tokenStorage;
     }
-    
-    public function getTokenStorage() 
+
+    public function getTokenStorage()
     {
-        return $this->tokenStorage;    
+        return $this->tokenStorage;
     }
 
     public function setHttpClient(\Guzzle\Http\Client $httpClient)
     {
         $this->httpClient = $httpClient;
     }
-    
-    public function getHttpClient() 
+
+    public function getHttpClient()
     {
         return $this->httpClient;
     }

@@ -49,12 +49,12 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
             )
         );
         // scope will be sorted de-duplicated string space separated
-        $this->assertEquals("foo bar baz baz", $t->getScope()->toString());
+        $this->assertEquals("bar baz foo", $t->getScope()->toString());
     }
 
     /**
-     * @expectedException fkooman\OAuth\Common\Exception\ScopeException
-     * @expectedExceptionMessage provided scope must be string
+     * @expectedException fkooman\OAuth\Client\TokenResponseException
+     * @expectedExceptionMessage scope must be non empty
      */
     public function testNullScope()
     {
