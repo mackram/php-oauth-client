@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use Guzzle\Http\Client;
+
 class Callback
 {
     private $clientConfigId;
@@ -24,8 +26,12 @@ class Callback
     private $tokenStorage;
     private $httpClient;
 
-    public function __construct($clientConfigId, ClientConfigInterface $clientConfig, StorageInterface $tokenStorage, \Guzzle\Http\Client $httpClient)
-    {
+    public function __construct(
+        $clientConfigId,
+        ClientConfigInterface $clientConfig,
+        StorageInterface $tokenStorage,
+        Client $httpClient
+    ) {
         $this->setClientConfigId($clientConfigId);
         $this->setClientConfig($clientConfig);
         $this->setTokenStorage($tokenStorage);
@@ -65,7 +71,7 @@ class Callback
         return $this->tokenStorage;
     }
 
-    public function setHttpClient(\Guzzle\Http\Client $httpClient)
+    public function setHttpClient(Client $httpClient)
     {
         $this->httpClient = $httpClient;
     }
@@ -77,15 +83,15 @@ class Callback
 
     public function handleCallback(array $query)
     {
-        $qState = isset($query['state']) ? $query['state'] : null;
-        $qCode = isset($query['code']) ? $query['code'] : null;
-        $qError = isset($query['error']) ? $query['error'] : null;
-        $qErrorDescription = isset($query['error_description']) ? $query['error_description'] : null;
+        $queryState = isset($query['state']) ? $query['state'] : null;
+        $queryCode = isset($query['code']) ? $query['code'] : null;
+        $queryError = isset($query['error']) ? $query['error'] : null;
+        $queryErrorDescription = isset($query['error_description']) ? $query['error_description'] : null;
 
-        if (null === $qState) {
+        if (null === $queryState) {
             throw new CallbackException("state parameter missing");
         }
-        $state = $this->tokenStorage->getState($this->clientConfigId, $qState);
+        $state = $this->tokenStorage->getState($this->clientConfigId, $queryState);
         if (false === $state) {
             throw new CallbackException("state not found");
         }
@@ -96,24 +102,24 @@ class Callback
             throw new CallbackException("state already used");
         }
 
-        if (null === $qCode && null === $qError) {
+        if (null === $queryCode && null === $queryError) {
             throw new CallbackException("both code and error parameter missing");
         }
 
-        if (null !== $qError) {
+        if (null !== $queryError) {
             // FIXME: this should probably be CallbackException?
-            throw new AuthorizeException($qError, $qErrorDescription);
+            throw new AuthorizeException($queryError, $queryErrorDescription);
         }
 
-        if (null !== $qCode) {
+        if (null !== $queryCode) {
             $t = new TokenRequest($this->httpClient, $this->clientConfig);
-            $tokenResponse = $t->withAuthorizationCode($qCode);
+            $tokenResponse = $t->withAuthorizationCode($queryCode);
             if (false === $tokenResponse) {
                 throw new CallbackException("unable to fetch access token with authorization code");
             }
 
             if (null === $tokenResponse->getScope()) {
-                // no scope in response, we assume we got the requested scope
+                // no scope in response, we assume we got the initially requested scope
                 $scope = $state->getScope();
             } else {
                 // the scope we got should be a superset of what we requested
