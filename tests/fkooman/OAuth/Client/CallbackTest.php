@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use PDO;
+
 use fkooman\OAuth\Common\Scope;
 
 use Guzzle\Http\Client;
@@ -40,6 +42,15 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 "token_endpoint" => "http://www.example.org/token"
             )
         );
+
+        $this->storage = new PdoStorage(
+            new PDO(
+                $GLOBALS['DB_DSN'],
+                $GLOBALS['DB_USER'],
+                $GLOBALS['DB_PASSWD']
+            )
+        );
+        $this->storage->initDatabase();
     }
 
     public function testXYZ()
@@ -61,8 +72,6 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         );
         $client->addSubscriber($mock);
 
-        $mockStorage = new MockStorage();
-
         $state = new State(
             array(
                 "state" => "my_state",
@@ -72,9 +81,9 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 "scope" => Scope::fromString("foo bar")
             )
         );
-        $mockStorage->storeState($state);
+        $this->storage->storeState($state);
 
-        $callback = new Callback("foo", $this->clientConfig[0], $mockStorage, $client);
+        $callback = new Callback("foo", $this->clientConfig[0], $this->storage, $client);
 
         $tokenResponse = $callback->handleCallback(
             array(

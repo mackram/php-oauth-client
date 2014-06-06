@@ -28,6 +28,7 @@ class PdoStorage implements StorageInterface
     public function __construct(PDO $db)
     {
         $this->db = $db;
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getAccessToken($clientConfigId, Context $context)
@@ -166,5 +167,47 @@ class PdoStorage implements StorageInterface
         $stmt->execute();
 
         return 1 === $stmt->rowCount();
+    }
+
+    public function initDatabase()
+    {
+        $query = "CREATE TABLE IF NOT EXISTS states (
+            client_config_id VARCHAR(255) NOT NULL,
+            user_id VARCHAR(255) NOT NULL,
+            scope VARCHAR(255) NOT NULL,
+            issue_time INTEGER NOT NULL,
+            state VARCHAR(255) NOT NULL,
+            UNIQUE (client_config_id , user_id , scope),
+            PRIMARY KEY (state)
+        )";
+        $this->db->query($query);
+
+        $query = "CREATE TABLE IF NOT EXISTS access_tokens (
+            client_config_id VARCHAR(255) NOT NULL,
+            user_id VARCHAR(255) NOT NULL,
+            scope VARCHAR(255) NOT NULL,
+            issue_time INTEGER NOT NULL,
+            access_token VARCHAR(255) NOT NULL,
+            token_type VARCHAR(255) NOT NULL,
+            expires_in INTEGER DEFAULT NULL,
+            UNIQUE (client_config_id , user_id , scope)
+        )";
+        $this->db->query($query);
+
+        $query = "CREATE TABLE IF NOT EXISTS refresh_tokens (
+            client_config_id VARCHAR(255) NOT NULL,
+            user_id VARCHAR(255) NOT NULL,
+            scope VARCHAR(255) NOT NULL,
+            issue_time INTEGER NOT NULL,
+            refresh_token VARCHAR(255) DEFAULT NULL,
+            UNIQUE (client_config_id , user_id , scope)
+        )";
+        $this->db->query($query);
+
+        // make sure the tables are empty
+        $this->db->query("DELETE FROM states");
+        $this->db->query("DELETE FROM access_tokens");
+        $this->db->query("DELETE FROM refresh_tokens");
+
     }
 }

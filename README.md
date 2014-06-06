@@ -264,7 +264,6 @@ just works out of the box.
 The PDO backend requires you specifying the database you want to use:
 
     $db = new PDO("sqlite:/path/to/db/client.sqlite");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $tokenStorage = new PdoStorage($db);
 
 In both cases you can use `$tokenStorage` in the constructor where before we 
@@ -311,4 +310,15 @@ the tests like this:
     $ php /path/to/phpunit.phar tests
 
 from the directory. Make sure you first run 
-`php /path/to/composer.phar install` before running the tests.
+`php /path/to/composer.phar install` before running the tests. By default the
+SQLite PDO driver is used for running database tests. If you want to use 
+another database to test against, copy the `phpunit.xml.dist` file to 
+`phpunit.xml` and modify the configuration. For example to use MySQL, 
+configure it like this:
+
+    <php>
+        <var name="DB_DSN" value="mysql:dbname=oauth;host=localhost" />
+        <var name="DB_USER" value="foo" />
+        <var name="DB_PASSWD" value="bar" />
+    </php>
+
