@@ -4,6 +4,7 @@
 * **BREAKS API**
 ** Context now has `array` as second parameter instead of `Scope`.
 * Remove embedded `Scope` class and use php-oauth-lib-common instead
+* Move exceptions to fkooman\OAuth\Client\Exception namespace
 
 ## 0.3.3
 * Fix bug with GitHub by setting `Accept` header to `application/json`
