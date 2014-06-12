@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\TokenException;
+
 class State extends Token
 {
     /** state VARCHAR(255) NOT NULL */

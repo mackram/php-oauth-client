@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\TokenException;
+
 class AccessToken extends Token
 {
     /** access_token VARCHAR(255) NOT NULL */

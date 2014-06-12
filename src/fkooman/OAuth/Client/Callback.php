@@ -17,6 +17,11 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\CallbackException;
+
+// FIXME: replace AuthorizeException with CallbackException?
+use fkooman\OAuth\Client\Exception\AuthorizeException;
+
 use Guzzle\Http\Client;
 
 class Callback
@@ -41,7 +46,7 @@ class Callback
     public function setClientConfigId($clientConfigId)
     {
         if (!is_string($clientConfigId) || 0 >= strlen($clientConfigId)) {
-            throw new ApiException("clientConfigId should be a non-empty string");
+            throw new CallbackException("clientConfigId should be a non-empty string");
         }
         $this->clientConfigId = $clientConfigId;
     }

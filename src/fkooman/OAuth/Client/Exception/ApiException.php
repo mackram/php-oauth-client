@@ -15,20 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace fkooman\OAuth\Client;
+namespace fkooman\OAuth\Client\Exception;
 
-class AuthorizeException extends \Exception
+class ApiException extends \Exception
 {
-    private $description;
-
-    public function __construct($message, $description, $code = 0, Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-        $this->description = $description;
-    }
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
 }

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace fkooman\OAuth\Client;
+namespace fkooman\OAuth\Client\Exception;
 
 class TokenResponseException extends \Exception
 {

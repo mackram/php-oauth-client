@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\ClientConfigException;
+
 class ClientConfig implements ClientConfigInterface
 {
     // VSCHAR     = %x20-7E

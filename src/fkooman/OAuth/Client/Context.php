@@ -17,6 +17,7 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\ContextException;
 use fkooman\OAuth\Common\Scope;
 
 class Context

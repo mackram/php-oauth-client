@@ -244,7 +244,7 @@ contents of this file are assumed to be in `callback.php`.
         // specific error message for the client, e.g.: the user did not authorize 
         // the request
         echo sprintf("ERROR: %s, DESCRIPTION: %s", $e->getMessage(), $e->getDescription());
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         // other error, these should never occur in the normal flow
         echo sprintf("ERROR: %s", $e->getMessage());
     }

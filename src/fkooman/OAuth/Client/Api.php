@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\ApiException;
+
 /**
  * API for talking to OAuth 2.0 protected resources.
  *

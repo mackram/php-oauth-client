@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\TokenException;
+
 class RefreshToken extends Token
 {
     /** refresh_token VARCHAR(255) NOT NULL */

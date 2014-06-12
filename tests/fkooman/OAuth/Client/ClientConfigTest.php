@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\ClientConfigException;
+
 class ClientConfigTest extends \PHPUnit_Framework_TestCase
 {
 

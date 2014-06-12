@@ -17,6 +17,8 @@
 
 namespace fkooman\OAuth\Client;
 
+use fkooman\OAuth\Client\Exception\ClientConfigException;
+
 class GoogleClientConfig extends ClientConfig implements ClientConfigInterface
 {
     public function __construct(array $data)
