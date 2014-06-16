@@ -112,6 +112,12 @@ class TokenRequest
                 }
             }
 
+            if (null !== $this->clientConfig->getUseCommaSeparatedScope()) {
+                if (is_array($responseData) && isset($responseData['scope'])) {
+                    $responseData['scope'] = str_replace(" ", ",", $responseData['scope']);
+                }
+            }
+
             return new TokenResponse($responseData);
         } catch (\Guzzle\Common\Exception\RuntimeException $e) {
             return false;

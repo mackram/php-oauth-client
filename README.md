@@ -122,6 +122,8 @@ violating services are:
 * `use_redirect_uri_on_refresh_token_request` in case the server requires you 
   to also provide the redirect_uri parameter on a refresh_token request. AS 
   with this behavior: Nationbuilder.
+* `use_comma_separated_scope`  when the AS expects the scope request to be 
+  comma separated instead of space separated. AS with this behavior: GitHub.
 
 ## Initializing the API
 Now you can initialize the `Api` object:

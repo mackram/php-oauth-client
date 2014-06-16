@@ -32,6 +32,7 @@ class ClientConfig implements ClientConfigInterface
     private $credentialsInRequestBody;
     private $defaultTokenType;
     private $allowNullExpiresIn;
+    private $useCommaSeparatedScope;
     private $enableDebug;
     private $defaultServerScope;
     private $useRedirectUriOnRefreshTokenRequest;
@@ -67,6 +68,9 @@ class ClientConfig implements ClientConfigInterface
 
         $defaultServerScope = array_key_exists('default_server_scope', $data) ? $data['default_server_scope'] : null;
         $this->setDefaultServerScope($defaultServerScope);
+
+        $useCommaSeparatedScope = array_key_exists('use_comma_separated_scope', $data) ? $data['use_comma_separated_scope'] : null;
+        $this->setUseCommaSeparatedScope($useCommaSeparatedScope);
 
         $enableDebug = array_key_exists('enable_debug', $data) ? $data['enable_debug'] : false;
         $this->setEnableDebug($enableDebug);
@@ -195,6 +199,16 @@ class ClientConfig implements ClientConfigInterface
     public function getUseRedirectUriOnRefreshTokenRequest()
     {
         return $this->useRedirectUriOnRefreshTokenRequest;
+    }
+
+    public function setUseCommaSeparatedScope($useCommaSeparatedScope)
+    {
+        $this->useCommaSeparatedScope = (bool) $useCommaSeparatedScope;
+    }
+
+    public function getUseCommaSeparatedScope()
+    {
+        return $this->useCommaSeparatedScope;
     }
 
     public function setEnableDebug($enableDebug)

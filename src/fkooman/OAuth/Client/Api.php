@@ -200,7 +200,11 @@ class Api
         // scope
         $contextScope = $context->getScope();
         if (!$contextScope->isEmpty()) {
-            $q['scope'] = $contextScope->toString();
+            if ($this->clientConfig->getUseCommaSeparatedScope()) {
+                $q['scope'] = $contextScope->toString(",");
+            } else {
+                $q['scope'] = $contextScope->toString();
+            }
         }
 
         // redirect_uri
