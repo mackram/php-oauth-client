@@ -114,7 +114,7 @@ class TokenRequest
 
             if (null !== $this->clientConfig->getUseCommaSeparatedScope()) {
                 if (is_array($responseData) && isset($responseData['scope'])) {
-                    $responseData['scope'] = str_replace(" ", ",", $responseData['scope']);
+                    $responseData['scope'] = str_replace(",", " ", $responseData['scope']);
                 }
             }
 
