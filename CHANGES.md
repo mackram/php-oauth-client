@@ -7,6 +7,7 @@
 * Move exceptions to fkooman\OAuth\Client\Exception namespace
 * Support requesting scopes using comma separation instead of space separation
   to satisfy GitHub spec violation (see README)
+* Add GitHubClientConfig 
 
 ## 0.3.3
 * Fix bug with GitHub by setting `Accept` header to `application/json`
