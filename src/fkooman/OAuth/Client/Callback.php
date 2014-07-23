@@ -63,7 +63,7 @@ class Callback
 
     public function getClientConfig()
     {
-        return $this->getClientConfig;
+        return $this->clientConfig;
     }
 
     public function setTokenStorage(StorageInterface $tokenStorage)
