@@ -311,6 +311,7 @@
     "stability-flags": [
 
     ],
+    "prefer-stable": false,
     "platform": {
         "ext-openssl": "*",
         "php": ">=5.3.3"
