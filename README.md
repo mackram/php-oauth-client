@@ -228,10 +228,9 @@ token yet.
 The above situation assumed you already had a valid access token. If you didn't
 you got redirected to the authorization server where you had to accept the 
 request for access to your data. Assuming that all went well you will be 
-redirected back the the redirection URI you registered at the OAuth 2.0 
-service.
+redirected back to the redirection URI you registered at the OAuth 2.0 service.
 
-The of the `Callback` class is very similar to the `Api` class. We assume you
+The `Callback` class is very similar to the `Api` class. We assume you
 also create the `ClientConfig` object here, like in the `Api` case. The
 contents of this file are assumed to be in `callback.php`.
 
