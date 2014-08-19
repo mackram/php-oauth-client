@@ -1,5 +1,8 @@
 # Release History
 
+## 0.5.0
+* Rename Composer package to fkooman/oauth-client
+
 ## 0.4.0
 * **BREAKS API**
 ** Context now has `array` as second parameter instead of `Scope`.
