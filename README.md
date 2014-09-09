@@ -274,6 +274,11 @@ to specify other databases.
 Please note that if you use SQLite, please note that the *directory* you write 
 the file to needs to be writable to the web server as well!
 
+If you want to use a table prefix, please use the second parameter of the 
+constructor to set the prefix, for instance:
+
+    $tokenStorage = new PdoStorage($db, "foo_");
+
 # Logging
 In order to log all the requests the OAuth library makes to the token endpoint
 it is possible to use e.g. the Monolog adapter for this. Below is an example 
