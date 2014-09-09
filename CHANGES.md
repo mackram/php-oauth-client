@@ -1,5 +1,9 @@
 # Release History
 
+## 0.5.1
+* Implement 'prefix' for database as second parameter to PdoStorage() to
+  allow for table prefixes (issue #39)
+
 ## 0.5.0
 * Rename Composer package to fkooman/oauth-client
 

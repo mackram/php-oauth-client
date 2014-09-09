@@ -25,15 +25,24 @@ class PdoStorage implements StorageInterface
     /** @var PDO */
     private $db;
 
-    public function __construct(PDO $db)
+    /** @var string */
+    private $prefix;
+
+    public function __construct(PDO $db, $prefix = "")
     {
         $this->db = $db;
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->prefix = $prefix;
     }
 
     public function getAccessToken($clientConfigId, Context $context)
     {
-        $stmt = $this->db->prepare("SELECT * FROM access_tokens WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "SELECT * FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope",
+                $this->prefix . 'access_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $context->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":scope", $context->getScope()->toString(), PDO::PARAM_STR);
@@ -51,7 +60,12 @@ class PdoStorage implements StorageInterface
 
     public function storeAccessToken(AccessToken $accessToken)
     {
-        $stmt = $this->db->prepare("INSERT INTO access_tokens (client_config_id, user_id, scope, access_token, token_type, expires_in, issue_time) VALUES(:client_config_id, :user_id, :scope, :access_token, :token_type, :expires_in, :issue_time)");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "INSERT INTO %s (client_config_id, user_id, scope, access_token, token_type, expires_in, issue_time) VALUES(:client_config_id, :user_id, :scope, :access_token, :token_type, :expires_in, :issue_time)",
+                $this->prefix . 'access_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $accessToken->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $accessToken->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":scope", $accessToken->getScope()->toString(), PDO::PARAM_STR);
@@ -67,7 +81,12 @@ class PdoStorage implements StorageInterface
 
     public function deleteAccessToken(AccessToken $accessToken)
     {
-        $stmt = $this->db->prepare("DELETE FROM access_tokens WHERE client_config_id = :client_config_id AND user_id = :user_id AND access_token = :access_token");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND access_token = :access_token",
+                $this->prefix . 'access_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $accessToken->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $accessToken->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":access_token", $accessToken->getAccessToken(), PDO::PARAM_STR);
@@ -78,7 +97,12 @@ class PdoStorage implements StorageInterface
 
     public function getRefreshToken($clientConfigId, Context $context)
     {
-        $stmt = $this->db->prepare("SELECT * FROM refresh_tokens WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "SELECT * FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope",
+                $this->prefix . 'refresh_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $context->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":scope", $context->getScope()->toString(), PDO::PARAM_STR);
@@ -96,7 +120,12 @@ class PdoStorage implements StorageInterface
 
     public function storeRefreshToken(RefreshToken $refreshToken)
     {
-        $stmt = $this->db->prepare("INSERT INTO refresh_tokens (client_config_id, user_id, scope, refresh_token, issue_time) VALUES(:client_config_id, :user_id, :scope, :refresh_token, :issue_time)");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "INSERT INTO %s (client_config_id, user_id, scope, refresh_token, issue_time) VALUES(:client_config_id, :user_id, :scope, :refresh_token, :issue_time)",
+                $this->prefix . 'refresh_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $refreshToken->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $refreshToken->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":scope", $refreshToken->getScope()->toString(), PDO::PARAM_STR);
@@ -110,7 +139,12 @@ class PdoStorage implements StorageInterface
 
     public function deleteRefreshToken(RefreshToken $refreshToken)
     {
-        $stmt = $this->db->prepare("DELETE FROM refresh_tokens WHERE client_config_id = :client_config_id AND user_id = :user_id AND refresh_token = :refresh_token");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND refresh_token = :refresh_token",
+                $this->prefix . 'refresh_tokens'
+            )
+        );
         $stmt->bindValue(":client_config_id", $refreshToken->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $refreshToken->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":refresh_token", $refreshToken->getRefreshToken(), PDO::PARAM_STR);
@@ -121,7 +155,12 @@ class PdoStorage implements StorageInterface
 
     public function getState($clientConfigId, $state)
     {
-        $stmt = $this->db->prepare("SELECT * FROM states WHERE client_config_id = :client_config_id AND state = :state");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "SELECT * FROM %s WHERE client_config_id = :client_config_id AND state = :state",
+                $this->prefix . 'states'
+            )
+        );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
         $stmt->bindValue(":state", $state, PDO::PARAM_STR);
         $stmt->execute();
@@ -138,7 +177,12 @@ class PdoStorage implements StorageInterface
 
     public function storeState(State $state)
     {
-        $stmt = $this->db->prepare("INSERT INTO states (client_config_id, user_id, scope, issue_time, state) VALUES(:client_config_id, :user_id, :scope, :issue_time, :state)");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "INSERT INTO %s (client_config_id, user_id, scope, issue_time, state) VALUES(:client_config_id, :user_id, :scope, :issue_time, :state)",
+                $this->prefix . 'states'
+            )
+        );
         $stmt->bindValue(":client_config_id", $state->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $state->getUserId(), PDO::PARAM_STR);
         $stmt->bindValue(":scope", $state->getScope()->toString(), PDO::PARAM_STR);
@@ -151,7 +195,12 @@ class PdoStorage implements StorageInterface
 
     public function deleteStateForContext($clientConfigId, Context $context)
     {
-        $stmt = $this->db->prepare("DELETE FROM states WHERE client_config_id = :client_config_id AND user_id = :user_id");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id",
+                $this->prefix . 'states'
+            )
+        );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $context->getUserId(), PDO::PARAM_STR);
         $stmt->execute();
@@ -161,7 +210,12 @@ class PdoStorage implements StorageInterface
 
     public function deleteState(State $state)
     {
-        $stmt = $this->db->prepare("DELETE FROM states WHERE client_config_id = :client_config_id AND state = :state");
+        $stmt = $this->db->prepare(
+            sprintf(
+                "DELETE FROM %s WHERE client_config_id = :client_config_id AND state = :state",
+                $this->prefix . 'states'
+            )
+        );
         $stmt->bindValue(":client_config_id", $state->getClientConfigId(), PDO::PARAM_STR);
         $stmt->bindValue(":state", $state->getState(), PDO::PARAM_STR);
         $stmt->execute();
@@ -171,43 +225,66 @@ class PdoStorage implements StorageInterface
 
     public function initDatabase()
     {
-        $query = "CREATE TABLE IF NOT EXISTS states (
-            client_config_id VARCHAR(255) NOT NULL,
-            user_id VARCHAR(255) NOT NULL,
-            scope VARCHAR(255) NOT NULL,
-            issue_time INTEGER NOT NULL,
-            state VARCHAR(255) NOT NULL,
-            UNIQUE (client_config_id , user_id , scope),
-            PRIMARY KEY (state)
-        )";
+        $query = sprintf(
+            "CREATE TABLE IF NOT EXISTS %s (
+                client_config_id VARCHAR(255) NOT NULL,
+                user_id VARCHAR(255) NOT NULL,
+                scope VARCHAR(255) NOT NULL,
+                issue_time INTEGER NOT NULL,
+                state VARCHAR(255) NOT NULL,
+                UNIQUE (client_config_id , user_id , scope),
+                PRIMARY KEY (state)
+            )",
+            $this->prefix . 'states'
+        );
         $this->db->query($query);
 
-        $query = "CREATE TABLE IF NOT EXISTS access_tokens (
-            client_config_id VARCHAR(255) NOT NULL,
-            user_id VARCHAR(255) NOT NULL,
-            scope VARCHAR(255) NOT NULL,
-            issue_time INTEGER NOT NULL,
-            access_token VARCHAR(255) NOT NULL,
-            token_type VARCHAR(255) NOT NULL,
-            expires_in INTEGER DEFAULT NULL,
-            UNIQUE (client_config_id , user_id , scope)
-        )";
+        $query = sprintf(
+            "CREATE TABLE IF NOT EXISTS %s (
+                client_config_id VARCHAR(255) NOT NULL,
+                user_id VARCHAR(255) NOT NULL,
+                scope VARCHAR(255) NOT NULL,
+                issue_time INTEGER NOT NULL,
+                access_token VARCHAR(255) NOT NULL,
+                token_type VARCHAR(255) NOT NULL,
+                expires_in INTEGER DEFAULT NULL,
+                UNIQUE (client_config_id , user_id , scope)
+            )",
+            $this->prefix . 'access_tokens'
+        );
         $this->db->query($query);
 
-        $query = "CREATE TABLE IF NOT EXISTS refresh_tokens (
-            client_config_id VARCHAR(255) NOT NULL,
-            user_id VARCHAR(255) NOT NULL,
-            scope VARCHAR(255) NOT NULL,
-            issue_time INTEGER NOT NULL,
-            refresh_token VARCHAR(255) DEFAULT NULL,
-            UNIQUE (client_config_id , user_id , scope)
-        )";
+        $query = sprintf(
+            "CREATE TABLE IF NOT EXISTS %s (
+                client_config_id VARCHAR(255) NOT NULL,
+                user_id VARCHAR(255) NOT NULL,
+                scope VARCHAR(255) NOT NULL,
+                issue_time INTEGER NOT NULL,
+                refresh_token VARCHAR(255) DEFAULT NULL,
+                UNIQUE (client_config_id , user_id , scope)
+            )",
+            $this->prefix . 'refresh_tokens'
+        );
         $this->db->query($query);
 
         // make sure the tables are empty
-        $this->db->query("DELETE FROM states");
-        $this->db->query("DELETE FROM access_tokens");
-        $this->db->query("DELETE FROM refresh_tokens");
-
+        $this->db->query(
+            sprintf(
+                "DELETE FROM %s",
+                $this->prefix . 'states'
+            )
+        );
+        $this->db->query(
+            sprintf(
+                "DELETE FROM %s",
+                $this->prefix . 'access_tokens'
+            )
+        );
+        $this->db->query(
+            sprintf(
+                "DELETE FROM %s",
+                $this->prefix . 'refresh_tokens'
+            )
+        );
     }
 }
