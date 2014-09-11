@@ -282,6 +282,15 @@ constructor to set the prefix, for instance:
 
     $tokenStorage = new PdoStorage($db, "foo_");
 
+To see the database schema you need to import in your database you can use the
+script in the `bin` directory, the first parameter is the prefix you want to
+use for your tables:
+
+    $ php bin/php-oauth-client-create-tables foo_
+
+If you specify no parameter no prefix is assumed and the tables to be created
+are shown without prefix.
+
 # Logging
 In order to log all the requests the OAuth library makes to the token endpoint
 it is possible to use e.g. the Monolog adapter for this. Below is an example 

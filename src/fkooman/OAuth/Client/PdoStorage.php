@@ -223,9 +223,10 @@ class PdoStorage implements StorageInterface
         return 1 === $stmt->rowCount();
     }
 
-    public function initDatabase()
+    public static function createTableQueries($prefix)
     {
-        $query = sprintf(
+        $query = array();
+        $query[] = sprintf(
             "CREATE TABLE IF NOT EXISTS %s (
                 client_config_id VARCHAR(255) NOT NULL,
                 user_id VARCHAR(255) NOT NULL,
@@ -235,11 +236,9 @@ class PdoStorage implements StorageInterface
                 UNIQUE (client_config_id , user_id , scope),
                 PRIMARY KEY (state)
             )",
-            $this->prefix . 'states'
+            $prefix . 'states'
         );
-        $this->db->query($query);
-
-        $query = sprintf(
+        $query[] = sprintf(
             "CREATE TABLE IF NOT EXISTS %s (
                 client_config_id VARCHAR(255) NOT NULL,
                 user_id VARCHAR(255) NOT NULL,
@@ -250,11 +249,9 @@ class PdoStorage implements StorageInterface
                 expires_in INTEGER DEFAULT NULL,
                 UNIQUE (client_config_id , user_id , scope)
             )",
-            $this->prefix . 'access_tokens'
+            $prefix . 'access_tokens'
         );
-        $this->db->query($query);
-
-        $query = sprintf(
+        $query[] = sprintf(
             "CREATE TABLE IF NOT EXISTS %s (
                 client_config_id VARCHAR(255) NOT NULL,
                 user_id VARCHAR(255) NOT NULL,
@@ -263,28 +260,27 @@ class PdoStorage implements StorageInterface
                 refresh_token VARCHAR(255) DEFAULT NULL,
                 UNIQUE (client_config_id , user_id , scope)
             )",
-            $this->prefix . 'refresh_tokens'
+            $prefix . 'refresh_tokens'
         );
-        $this->db->query($query);
 
-        // make sure the tables are empty
-        $this->db->query(
-            sprintf(
-                "DELETE FROM %s",
-                $this->prefix . 'states'
-            )
-        );
-        $this->db->query(
-            sprintf(
-                "DELETE FROM %s",
-                $this->prefix . 'access_tokens'
-            )
-        );
-        $this->db->query(
-            sprintf(
-                "DELETE FROM %s",
-                $this->prefix . 'refresh_tokens'
-            )
-        );
+        return $query;
+    }
+    public function initDatabase()
+    {
+        $queries = self::createTableQueries($this->prefix);
+        foreach ($queries as $q) {
+            $this->db->query($q);
+        }
+
+        $tables = array('states', 'access_tokens', 'refresh_tokens');
+        foreach ($tables as $t) {
+            // make sure the tables are empty
+            $this->db->query(
+                sprintf(
+                    "DELETE FROM %s",
+                    $this->prefix . $t
+                )
+            );
+        }
     }
 }
