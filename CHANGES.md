@@ -3,6 +3,8 @@
 ## 0.5.1
 * Implement 'prefix' for database as second parameter to PdoStorage() to
   allow for table prefixes (issue #39)
+* Implement support for 'exires_in' return value as string from OAuth server
+  (issue #40)
 
 ## 0.5.0
 * Rename Composer package to fkooman/oauth-client

@@ -36,6 +36,7 @@ class ClientConfig implements ClientConfigInterface
     private $enableDebug;
     private $defaultServerScope;
     private $useRedirectUriOnRefreshTokenRequest;
+    private $allowStringExpiresIn;
 
     public function __construct(array $data)
     {
@@ -74,6 +75,9 @@ class ClientConfig implements ClientConfigInterface
 
         $enableDebug = array_key_exists('enable_debug', $data) ? $data['enable_debug'] : false;
         $this->setEnableDebug($enableDebug);
+
+        $allowStringExpiresIn = array_key_exists('allow_string_expires_in', $data) ? $data['allow_string_expires_in'] : false;
+        $this->setAllowStringExpiresIn($allowStringExpiresIn);
     }
 
     public function setClientId($clientId)
@@ -209,6 +213,16 @@ class ClientConfig implements ClientConfigInterface
     public function getUseCommaSeparatedScope()
     {
         return $this->useCommaSeparatedScope;
+    }
+
+    public function setAllowStringExpiresIn($allowStringExpiresIn)
+    {
+        $this->allowStringExpiresIn = (bool) $allowStringExpiresIn;
+    }
+
+    public function getAllowStringExpiresIn()
+    {
+        return $this->allowStringExpiresIn;
     }
 
     public function setEnableDebug($enableDebug)

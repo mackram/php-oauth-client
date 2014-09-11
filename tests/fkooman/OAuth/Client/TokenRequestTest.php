@@ -55,6 +55,17 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             )
         );
 
+        $this->clientConfig[] = new ClientConfig(
+            array(
+                "client_id" => "foo",
+                "client_secret" => "bar",
+                "authorize_endpoint" => "http://www.example.org/authorize",
+                "token_endpoint" => "http://www.example.org/token",
+                "redirect_uri" => "http://foo.example.org/callback",
+                "allow_string_expires_in" => true
+            )
+        );
+
         $this->tokenResponse[] = json_encode(
             array(
                 "access_token" => "foo",
@@ -63,6 +74,14 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->tokenResponse[] = "{";
+
+        $this->tokenResponse[] = json_encode(
+            array(
+                "access_token" => "foo",
+                "token_type" => "Bearer",
+                "expires_in" => "1200"
+            )
+        );
     }
 
     public function testWithAuthorizationCode()
@@ -107,6 +126,20 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             "application/x-www-form-urlencoded; charset=utf-8",
             $lastRequest->getHeader("Content-Type")
         );
+    }
+
+    public function testAllowStringExpiresIn()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[2]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[2]);
+        $tokenResponse = $tokenRequest->withAuthorizationCode("12345");
+        $this->assertEquals(1200, $tokenResponse->getExpiresIn());
     }
 
     public function testWithRefreshToken()

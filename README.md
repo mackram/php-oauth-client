@@ -122,8 +122,11 @@ violating services are:
 * `use_redirect_uri_on_refresh_token_request` in case the server requires you 
   to also provide the redirect_uri parameter on a refresh_token request. AS 
   with this behavior: Nationbuilder.
-* `use_comma_separated_scope`  when the AS expects the scope request to be 
+* `use_comma_separated_scope` when the AS expects the scope request to be 
   comma separated instead of space separated. AS with this behavior: GitHub.
+* `allow_string_expires_in` some AS returns the expires_in value as a string 
+  instead of a numerical value. Setting this will cast the string to 
+  number.
 
 ## Initializing the API
 Now you can initialize the `Api` object:

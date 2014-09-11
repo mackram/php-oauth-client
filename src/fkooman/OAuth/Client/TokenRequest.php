@@ -112,6 +112,15 @@ class TokenRequest
                 }
             }
 
+            // the service can return a string value of the expires_in
+            // parameter, allow to convert to number instead
+            // issue: https://github.com/fkooman/php-oauth-client/issues/40
+            if ($this->clientConfig->getAllowStringExpiresIn()) {
+                if (is_array($responseData) && isset($responseData['expires_in']) && is_string($responseData['expires_in'])) {
+                    $responseData['expires_in'] = intval($responseData['expires_in']);
+                }
+            }
+
             if (null !== $this->clientConfig->getUseCommaSeparatedScope()) {
                 if (is_array($responseData) && isset($responseData['scope'])) {
                     $responseData['scope'] = str_replace(",", " ", $responseData['scope']);
