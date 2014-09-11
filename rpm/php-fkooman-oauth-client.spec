@@ -5,8 +5,8 @@
 %global github_name      php-oauth-client
 
 Name:       php-%{composer_vendor}-%{composer_project}
-Version:    0.5.0
-Release:    2%{?dist}
+Version:    0.5.1
+Release:    1%{?dist}
 Summary:    OAuth 2.0 "Authorization Code Grant" client written in PHP
 
 Group:      System Environment/Libraries
@@ -50,6 +50,9 @@ cp -pr src/* ${RPM_BUILD_ROOT}%{_datadir}/php
 %doc README.md CHANGES.md lgpl-3.0.txt composer.json docs/ example/ schema/
 
 %changelog
+* Thu Sep 11 2014 François Kooman <fkooman@tuxed.net> - 0.5.1-1
+- update to 0.5.1
+
 * Sat Aug 30 2014 François Kooman <fkooman@tuxed.net> - 0.5.0-2
 - use github tagged release sources
 - update group to System Environment/Libraries
