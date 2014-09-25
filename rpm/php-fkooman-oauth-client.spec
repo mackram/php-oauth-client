@@ -6,7 +6,7 @@
 
 Name:       php-%{composer_vendor}-%{composer_project}
 Version:    0.5.2
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    OAuth 2.0 "Authorization Code Grant" client written in PHP
 
 Group:      System Environment/Libraries
@@ -47,9 +47,12 @@ cp -pr src/* ${RPM_BUILD_ROOT}%{_datadir}/php
 %defattr(-,root,root,-)
 %dir %{_datadir}/php/%{composer_vendor}/OAuth/Client
 %{_datadir}/php/%{composer_vendor}/OAuth/Client/*
-%doc README.md CHANGES.md lgpl-3.0.txt composer.json docs/ example/ schema/
+%doc README.md CHANGES.md lgpl-3.0.txt composer.json docs/ example/
 
 %changelog
+* Thu Sep 25 2014 François Kooman <fkooman@tuxed.net> - 0.5.2-2
+- remove installation of schema
+
 * Thu Sep 25 2014 François Kooman <fkooman@tuxed.net> - 0.5.2-1
 - update to 0.5.2
 
