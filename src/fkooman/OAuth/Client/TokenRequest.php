@@ -121,9 +121,18 @@ class TokenRequest
                 }
             }
 
-            if (null !== $this->clientConfig->getUseCommaSeparatedScope()) {
+            if ($this->clientConfig->getUseCommaSeparatedScope()) {
                 if (is_array($responseData) && isset($responseData['scope'])) {
                     $responseData['scope'] = str_replace(",", " ", $responseData['scope']);
+                }
+            }
+
+            // issue: https://github.com/fkooman/php-oauth-client/issues/41
+            if ($this->clientConfig->getUseArrayScope()) {
+                if (is_array($responseData) && isset($responseData['scope'])) {
+                    if (is_array($responseData['scope'])) {
+                        $responseData['scope'] = implode(" ", $responseData['scope']);
+                    }
                 }
             }
 

@@ -33,6 +33,7 @@ class ClientConfig implements ClientConfigInterface
     private $defaultTokenType;
     private $allowNullExpiresIn;
     private $useCommaSeparatedScope;
+    private $useArrayScope;
     private $enableDebug;
     private $defaultServerScope;
     private $useRedirectUriOnRefreshTokenRequest;
@@ -72,6 +73,9 @@ class ClientConfig implements ClientConfigInterface
 
         $useCommaSeparatedScope = array_key_exists('use_comma_separated_scope', $data) ? $data['use_comma_separated_scope'] : null;
         $this->setUseCommaSeparatedScope($useCommaSeparatedScope);
+
+        $useArrayScope = array_key_exists('use_array_scope', $data) ? $data['use_array_scope'] : null;
+        $this->setUseArrayScope($useArrayScope);
 
         $enableDebug = array_key_exists('enable_debug', $data) ? $data['enable_debug'] : false;
         $this->setEnableDebug($enableDebug);
@@ -213,6 +217,16 @@ class ClientConfig implements ClientConfigInterface
     public function getUseCommaSeparatedScope()
     {
         return $this->useCommaSeparatedScope;
+    }
+
+    public function setUseArrayScope($useArrayScope)
+    {
+        $this->useArrayScope = (bool) $useArrayScope;
+    }
+
+    public function getUseArrayScope()
+    {
+        return $this->useArrayScope;
     }
 
     public function setAllowStringExpiresIn($allowStringExpiresIn)

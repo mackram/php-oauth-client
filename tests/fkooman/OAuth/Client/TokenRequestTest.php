@@ -21,6 +21,7 @@ use Guzzle\Http\Client;
 use Guzzle\Plugin\History\HistoryPlugin;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
+use fkooman\OAuth\Common\Scope;
 
 class TokenRequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -66,6 +67,28 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             )
         );
 
+        $this->clientConfig[] = new ClientConfig(
+            array(
+                "client_id" => "foo",
+                "client_secret" => "bar",
+                "authorize_endpoint" => "http://www.example.org/authorize",
+                "token_endpoint" => "http://www.example.org/token",
+                "redirect_uri" => "http://foo.example.org/callback",
+                "use_array_scope" => true
+            )
+        );
+
+        $this->clientConfig[] = new ClientConfig(
+            array(
+                "client_id" => "foo",
+                "client_secret" => "bar",
+                "authorize_endpoint" => "http://www.example.org/authorize",
+                "token_endpoint" => "http://www.example.org/token",
+                "redirect_uri" => "http://foo.example.org/callback",
+                "use_comma_separated_scope" => true
+            )
+        );
+
         $this->tokenResponse[] = json_encode(
             array(
                 "access_token" => "foo",
@@ -80,6 +103,22 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "access_token" => "foo",
                 "token_type" => "Bearer",
                 "expires_in" => "1200"
+            )
+        );
+
+        $this->tokenResponse[] = json_encode(
+            array(
+                "access_token" => "foo",
+                "token_type" => "Bearer",
+                "scope" => array("foo", "bar")
+            )
+        );
+
+        $this->tokenResponse[] = json_encode(
+            array(
+                "access_token" => "foo",
+                "token_type" => "Bearer",
+                "scope" => "foo,bar"
             )
         );
     }
@@ -140,6 +179,34 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
         $tokenRequest = new TokenRequest($client, $this->clientConfig[2]);
         $tokenResponse = $tokenRequest->withAuthorizationCode("12345");
         $this->assertEquals(1200, $tokenResponse->getExpiresIn());
+    }
+
+    public function testAllowArrayScope()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[3]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[3]);
+        $tokenResponse = $tokenRequest->withAuthorizationCode("12345");
+        $this->assertTrue($tokenResponse->getScope()->equals(Scope::fromString("foo bar")));
+    }
+
+    public function testAllowCommaSeparatedScope()
+    {
+        $client = new Client();
+        $mock = new MockPlugin();
+        $mock->addResponse(new Response(200, null, $this->tokenResponse[4]));
+        $client->addSubscriber($mock);
+        $history = new HistoryPlugin();
+        $history->setLimit(5);
+        $client->addSubscriber($history);
+        $tokenRequest = new TokenRequest($client, $this->clientConfig[4]);
+        $tokenResponse = $tokenRequest->withAuthorizationCode("12345");
+        $this->assertTrue($tokenResponse->getScope()->equals(Scope::fromString("foo bar")));
     }
 
     public function testWithRefreshToken()

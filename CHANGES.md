@@ -1,5 +1,8 @@
 # Release History
 
+## 0.5.2
+* Implement support for scope being returnd as array (issue #41)
+
 ## 0.5.1
 * Implement 'prefix' for database as second parameter to PdoStorage() to
   allow for table prefixes (issue #39)
