@@ -24,8 +24,8 @@ Requires:   php-pdo
 
 Requires:   php-composer(fkooman/oauth-common) >= 0.5.0
 Requires:   php-composer(fkooman/oauth-common) < 0.6.0
-Requires:   php-pear(guzzlephp.org/pear/Guzzle) >= 3.8.0
-Requires:   php-pear(guzzlephp.org/pear/Guzzle) < 4.0
+Requires:   php-composer(guzzle/guzzle) >= 3.9
+Requires:   php-composer(guzzle/guzzle) < 4.0
 
 %description
 This project provides an OAuth 2.0 "Authorization Code Grant" client as 
