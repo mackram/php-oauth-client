@@ -89,7 +89,6 @@ class Token
             throw new TokenException("issue_time should be positive integer");
         }
         $this->issueTime = (int) $issueTime;
-
     }
 
     public function getIssueTime()

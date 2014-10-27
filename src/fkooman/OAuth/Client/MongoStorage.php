@@ -47,7 +47,7 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
             array(
                 'user_id' => $uid,
                 'client_config_id' => $clientConfigId,
-                'scope' => $scope
+                'scope' => $scope,
             )
         );
 
@@ -71,11 +71,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
                 'access_token'     => $accessToken->getAccessToken(),
                 'token_type'       => $accessToken->getTokenType(),
                 'expires_in'       => $accessToken->getExpiresIn(),
-                'issue_time'       => $accessToken->getIssueTime()
+                'issue_time'       => $accessToken->getIssueTime(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1) || $result;
+        return (is_array($result) && 1 == $result['ok']) || $result;
     }
 
     public function deleteAccessToken(fkooman\OAuth\Client\AccessToken $accessToken)
@@ -85,11 +85,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
             array(
                 'client_config_id' => $accessToken->getClientConfigId(),
                 'user_id'          => $accessToken->getUserId(),
-                'access_token'     => $accessToken->getAccessToken()
+                'access_token'     => $accessToken->getAccessToken(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
+        return (is_array($result) && 1 == $result['ok'] && $result['n'] > 0) || $result;
     }
 
     public function getRefreshToken($clientConfigId, fkooman\OAuth\Client\Context $context)
@@ -101,7 +101,7 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
             array(
                 'user_id' => $uid,
                 'client_config_id' => $clientConfigId,
-                'scope' => $scope
+                'scope' => $scope,
             )
         );
 
@@ -123,11 +123,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
                 'user_id'          => $refreshToken->getUserId(),
                 'scope'            => $refreshToken->getScope()->isEmpty() ? null : $refreshToken->getScope()->toString(),
                 'refresh_token'    => $refreshToken->getRefreshToken(),
-                'issue_time'       => $refreshToken->getIssueTime()
+                'issue_time'       => $refreshToken->getIssueTime(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1) || $result;
+        return (is_array($result) && 1 == $result['ok']) || $result;
     }
 
     public function deleteRefreshToken(fkooman\OAuth\Client\RefreshToken $refreshToken)
@@ -137,11 +137,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
             array(
                 'client_config_id' => $refreshToken->getClientConfigId(),
                 'user_id'          => $refreshToken->getUserId(),
-                'refresh_token'     => $refreshToken->getRefreshToken()
+                'refresh_token'     => $refreshToken->getRefreshToken(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
+        return (is_array($result) && 1 == $result['ok'] && $result['n'] > 0) || $result;
     }
 
     public function getState($clientConfigId, $state)
@@ -150,7 +150,7 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->findOne(
             array(
                 'client_config_id' => $clientConfigId,
-                'state' => $state
+                'state' => $state,
             )
         );
 
@@ -172,11 +172,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
                 'user_id'          => $state->getUserId(),
                 'scope'            => $state->getScope()->isEmpty() ? null : $state->getScope()->toString(),
                 'state'            => $state->getState(),
-                'issue_time'       => $state->getIssueTime()
+                'issue_time'       => $state->getIssueTime(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1) || $result;
+        return (is_array($result) && 1 == $result['ok']) || $result;
     }
 
     public function deleteStateForContext($clientConfigId, fkooman\OAuth\Client\Context $context)
@@ -185,11 +185,11 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->remove(
             array(
                 'client_config_id' => $clientConfigId,
-                'user_id' => $context->getUserId()
+                'user_id' => $context->getUserId(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
+        return (is_array($result) && 1 == $result['ok'] && $result['n'] > 0) || $result;
     }
 
     public function deleteState(fkooman\OAuth\Client\State $state)
@@ -198,10 +198,10 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->remove(
             array(
                 'client_config_id' => $state->getClientConfigId(),
-                'state' => $state->getState()
+                'state' => $state->getState(),
             )
         );
 
-        return (is_array($result) && $result['ok'] == 1 && $result['n'] > 0) || $result;
+        return (is_array($result) && 1 == $result['ok'] && $result['n'] > 0) || $result;
     }
 }

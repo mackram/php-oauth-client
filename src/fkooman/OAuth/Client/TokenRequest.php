@@ -35,7 +35,7 @@ class TokenRequest
     {
         $p = array (
             "code" => $authorizationCode,
-            "grant_type" => "authorization_code"
+            "grant_type" => "authorization_code",
         );
         if (null !== $this->clientConfig->getRedirectUri()) {
             $p['redirect_uri'] = $this->clientConfig->getRedirectUri();
@@ -48,7 +48,7 @@ class TokenRequest
     {
         $p = array (
             "refresh_token" => $refreshToken,
-            "grant_type" => "refresh_token"
+            "grant_type" => "refresh_token",
         );
         // Some services require specifying the redirect_uri also when using
         // the refresh_token.

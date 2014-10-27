@@ -18,9 +18,7 @@
 namespace fkooman\OAuth\Client;
 
 use PDO;
-
 use fkooman\OAuth\Common\Scope;
-
 use Guzzle\Http\Client;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
@@ -42,7 +40,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "client_id" => "foo",
                 "client_secret" => "bar",
                 "authorize_endpoint" => "http://www.example.org/authorize",
-                "token_endpoint" => "http://www.example.org/token"
+                "token_endpoint" => "http://www.example.org/token",
             )
         );
 
@@ -88,7 +86,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "access_token" => "my_token_value",
                 "scope" => Scope::fromString("foo bar"),
                 "issue_time" => time() - 100,
-                "expires_in" => 3600
+                "expires_in" => 3600,
             )
         );
         $this->storage->storeAccessToken($accessToken);
@@ -108,7 +106,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 json_encode(
                     array(
                         "access_token" => "my_new_access_token_value",
-                        "token_type" => "Bearer"
+                        "token_type" => "Bearer",
                     )
                 )
             )
@@ -126,7 +124,7 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 "access_token" => "my_token_value",
                 "scope" => Scope::fromString("foo bar"),
                 "issue_time" => time() - 4000,
-                "expires_in" => 3600
+                "expires_in" => 3600,
             )
         );
         $this->storage->storeAccessToken($accessToken);

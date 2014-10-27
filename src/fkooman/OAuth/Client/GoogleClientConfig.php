@@ -40,7 +40,7 @@ class GoogleClientConfig extends ClientConfig implements ClientConfigInterface
             "authorize_endpoint" => $data['web']['auth_uri'],
             "token_endpoint" => $data['web']['token_uri'],
             "redirect_uri" => $data['web']['redirect_uris'][0],
-            "credentials_in_request_body" => true
+            "credentials_in_request_body" => true,
         );
         parent::__construct($clientData);
     }

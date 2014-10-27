@@ -5,7 +5,6 @@ use fkooman\OAuth\Client\Context;
 use fkooman\OAuth\Client\GoogleClientConfig;
 use fkooman\OAuth\Client\SessionStorage;
 use fkooman\OAuth\Client\PdoStorage;
-
 use Guzzle\Http\Client;
 use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
 use fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException;
@@ -31,7 +30,7 @@ try {
     if (false === $accessToken) {
         /* no valid access token available just yet, go to authorization server */
         header("HTTP/1.1 302 Found");
-        header("Location: " . $api->getAuthorizeUri($context));
+        header("Location: ".$api->getAuthorizeUri($context));
         exit;
     }
 
@@ -44,7 +43,6 @@ try {
 
         header("Content-Type: application/json");
         echo $response->getBody();
-
     } catch (BearerErrorResponseException $e) {
         if ("invalid_token" === $e->getBearerReason()) {
             /* no valid access token available just yet, go to authorization server */
@@ -54,12 +52,11 @@ try {
             // $api->deleteRefreshToken($context);
 
             header("HTTP/1.1 302 Found");
-            header("Location: " . $api->getAuthorizeUri($context));
+            header("Location: ".$api->getAuthorizeUri($context));
             exit;
         }
         throw $e;
     }
-
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());
 }

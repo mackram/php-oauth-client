@@ -19,7 +19,6 @@ namespace fkooman\OAuth\Client;
 
 class TokenResponseTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSimple()
     {
         $t = new TokenResponse(
@@ -95,6 +94,5 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
                 "expires_in" => -5,
             )
         );
-
     }
 }

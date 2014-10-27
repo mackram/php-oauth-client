@@ -123,7 +123,7 @@ class Api
                     "access_token" => $tokenResponse->getAccessToken(),
                     "token_type" => $tokenResponse->getTokenType(),
                     "issue_time" => time(),
-                    "expires_in" => $tokenResponse->getExpiresIn()
+                    "expires_in" => $tokenResponse->getExpiresIn(),
                 )
             );
             $this->tokenStorage->storeAccessToken($accessToken);
@@ -136,7 +136,7 @@ class Api
                         "user_id" => $context->getUserId(),
                         "scope" => $scope,
                         "refresh_token" => $tokenResponse->getRefreshToken(),
-                        "issue_time" => time()
+                        "issue_time" => time(),
                     )
                 );
                 $this->tokenStorage->storeRefreshToken($refreshToken);
@@ -184,7 +184,7 @@ class Api
                 "user_id" => $context->getUserId(),
                 "scope" => $context->getScope(),
                 "issue_time" => time(),
-                "state" => $stateValue
+                "state" => $stateValue,
             )
         );
         if (false === $this->tokenStorage->storeState($state)) {
@@ -213,7 +213,7 @@ class Api
         }
 
         $separator = (false === strpos($this->clientConfig->getAuthorizeEndpoint(), "?")) ? "?" : "&";
-        $authorizeUri = $this->clientConfig->getAuthorizeEndpoint() . $separator . http_build_query($q, null, '&');
+        $authorizeUri = $this->clientConfig->getAuthorizeEndpoint().$separator.http_build_query($q, null, '&');
 
         return $authorizeUri;
     }

@@ -35,7 +35,7 @@ class GitHubClientConfig extends ClientConfig implements ClientConfigInterface
             "authorize_endpoint" => "https://github.com/login/oauth/authorize",
             "token_endpoint" => "https://github.com/login/oauth/access_token",
             "use_comma_separated_scope" => true,
-            "credentials_in_request_body" => true
+            "credentials_in_request_body" => true,
         );
         parent::__construct($clientData);
     }

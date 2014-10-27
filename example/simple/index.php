@@ -23,7 +23,7 @@ $accessToken = $api->getAccessToken($context);
 if (false === $accessToken) {
     /* no valid access token available, go to authorization server */
     header("HTTP/1.1 302 Found");
-    header("Location: " . $api->getAuthorizeUri($context));
+    header("Location: ".$api->getAuthorizeUri($context));
     exit;
 }
 
@@ -41,7 +41,7 @@ try {
         $api->deleteRefreshToken($context);
         /* no valid access token available, go to authorization server */
         header("HTTP/1.1 302 Found");
-        header("Location: " . $api->getAuthorizeUri($context));
+        header("Location: ".$api->getAuthorizeUri($context));
         exit;
     }
     throw $e;

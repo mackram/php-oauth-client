@@ -21,7 +21,6 @@ use fkooman\OAuth\Client\Exception\ClientConfigException;
 
 class ClientConfigTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSimple()
     {
         $data = array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token");
@@ -44,7 +43,6 @@ class ClientConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("http://www.example.org/token", $c->getTokenEndpoint());
         $this->assertEquals("http://www.example.org/callback", $c->getRedirectUri());
         $this->assertTrue($c->getCredentialsInRequestBody());
-
     }
 
     /**
@@ -95,47 +93,47 @@ class ClientConfigTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 array(),
-                "missing field 'client_id'"
+                "missing field 'client_id'",
             ),
             array(
                 array("client_id" => "", "client_secret" => "", "authorize_endpoint" => "", "token_endpoint" => ""),
-                "client_id must be a non-empty string"
+                "client_id must be a non-empty string",
             ),
             array(
                 array("client_id" => "foo"),
-                "missing field 'authorize_endpoint'"
+                "missing field 'authorize_endpoint'",
             ),
             array(
                 array("client_id" => "foo", "client_secret" => "bar"),
-                "missing field 'authorize_endpoint'"
+                "missing field 'authorize_endpoint'",
             ),
             array(
                 array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => 5),
-                "uri must be a non-empty string"
+                "uri must be a non-empty string",
             ),
             array(
                 array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize"),
-                "missing field 'token_endpoint'"
+                "missing field 'token_endpoint'",
             ),
             array(
                 array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "not_a_url", "token_endpoint" => "http://www.example.org/token#foo"),
-                "uri must be valid URL"
+                "uri must be valid URL",
             ),
             array(
                 array("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token#foo"),
-                "uri must not contain a fragment"
+                "uri must not contain a fragment",
             ),
             array(
               array ("client_id" => "foo", "client_secret" => "∑", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token"),
-                "invalid characters in client_id or client_secret"
+                "invalid characters in client_id or client_secret",
             ),
             array(
               array ("client_id" => "foo", "client_secret" => 5, "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token"),
-                "client_secret must be a non-empty string or null"
+                "client_secret must be a non-empty string or null",
             ),
             array(
               array ("client_id" => "foo", "client_secret" => "bar", "authorize_endpoint" => "http://www.example.org/authorize", "token_endpoint" => "http://www.example.org/token", "default_token_type" => ''),
-                "default_token_type must be a non-empty string or null"
+                "default_token_type must be a non-empty string or null",
             ),
 
         );

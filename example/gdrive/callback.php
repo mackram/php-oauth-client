@@ -4,7 +4,6 @@ use fkooman\OAuth\Client\GoogleClientConfig;
 use fkooman\OAuth\Client\Callback;
 use fkooman\OAuth\Client\SessionStorage;
 use fkooman\OAuth\Client\PdoStorage;
-
 use Guzzle\Http\Client;
 
 require_once 'vendor/autoload.php';
@@ -24,7 +23,6 @@ try {
 
     header("HTTP/1.1 302 Found");
     header("Location: https://fkooman.pagekite.me/php-drive-client/index.php");
-
 } catch (Exception $e) {
     echo sprintf("ERROR: %s", $e->getMessage());
 }

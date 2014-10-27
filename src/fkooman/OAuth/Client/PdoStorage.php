@@ -40,7 +40,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "SELECT * FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope",
-                $this->prefix . 'access_tokens'
+                $this->prefix.'access_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
@@ -63,7 +63,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "INSERT INTO %s (client_config_id, user_id, scope, access_token, token_type, expires_in, issue_time) VALUES(:client_config_id, :user_id, :scope, :access_token, :token_type, :expires_in, :issue_time)",
-                $this->prefix . 'access_tokens'
+                $this->prefix.'access_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $accessToken->getClientConfigId(), PDO::PARAM_STR);
@@ -84,7 +84,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND access_token = :access_token",
-                $this->prefix . 'access_tokens'
+                $this->prefix.'access_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $accessToken->getClientConfigId(), PDO::PARAM_STR);
@@ -100,7 +100,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "SELECT * FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND scope = :scope",
-                $this->prefix . 'refresh_tokens'
+                $this->prefix.'refresh_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
@@ -123,7 +123,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "INSERT INTO %s (client_config_id, user_id, scope, refresh_token, issue_time) VALUES(:client_config_id, :user_id, :scope, :refresh_token, :issue_time)",
-                $this->prefix . 'refresh_tokens'
+                $this->prefix.'refresh_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $refreshToken->getClientConfigId(), PDO::PARAM_STR);
@@ -142,7 +142,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id AND refresh_token = :refresh_token",
-                $this->prefix . 'refresh_tokens'
+                $this->prefix.'refresh_tokens'
             )
         );
         $stmt->bindValue(":client_config_id", $refreshToken->getClientConfigId(), PDO::PARAM_STR);
@@ -158,7 +158,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "SELECT * FROM %s WHERE client_config_id = :client_config_id AND state = :state",
-                $this->prefix . 'states'
+                $this->prefix.'states'
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
@@ -180,7 +180,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "INSERT INTO %s (client_config_id, user_id, scope, issue_time, state) VALUES(:client_config_id, :user_id, :scope, :issue_time, :state)",
-                $this->prefix . 'states'
+                $this->prefix.'states'
             )
         );
         $stmt->bindValue(":client_config_id", $state->getClientConfigId(), PDO::PARAM_STR);
@@ -198,7 +198,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "DELETE FROM %s WHERE client_config_id = :client_config_id AND user_id = :user_id",
-                $this->prefix . 'states'
+                $this->prefix.'states'
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
@@ -213,7 +213,7 @@ class PdoStorage implements StorageInterface
         $stmt = $this->db->prepare(
             sprintf(
                 "DELETE FROM %s WHERE client_config_id = :client_config_id AND state = :state",
-                $this->prefix . 'states'
+                $this->prefix.'states'
             )
         );
         $stmt->bindValue(":client_config_id", $state->getClientConfigId(), PDO::PARAM_STR);
@@ -236,7 +236,7 @@ class PdoStorage implements StorageInterface
                 UNIQUE (client_config_id , user_id , scope),
                 PRIMARY KEY (state)
             )",
-            $prefix . 'states'
+            $prefix.'states'
         );
         $query[] = sprintf(
             "CREATE TABLE IF NOT EXISTS %s (
@@ -249,7 +249,7 @@ class PdoStorage implements StorageInterface
                 expires_in INTEGER DEFAULT NULL,
                 UNIQUE (client_config_id , user_id , scope)
             )",
-            $prefix . 'access_tokens'
+            $prefix.'access_tokens'
         );
         $query[] = sprintf(
             "CREATE TABLE IF NOT EXISTS %s (
@@ -260,7 +260,7 @@ class PdoStorage implements StorageInterface
                 refresh_token VARCHAR(255) DEFAULT NULL,
                 UNIQUE (client_config_id , user_id , scope)
             )",
-            $prefix . 'refresh_tokens'
+            $prefix.'refresh_tokens'
         );
 
         return $query;
@@ -278,7 +278,7 @@ class PdoStorage implements StorageInterface
             $this->db->query(
                 sprintf(
                     "DELETE FROM %s",
-                    $this->prefix . $t
+                    $this->prefix.$t
                 )
             );
         }

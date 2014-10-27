@@ -21,7 +21,6 @@ use fkooman\OAuth\Client\Exception\CallbackException;
 
 // FIXME: replace AuthorizeException with CallbackException?
 use fkooman\OAuth\Client\Exception\AuthorizeException;
-
 use Guzzle\Http\Client;
 
 class Callback
@@ -147,7 +146,7 @@ class Callback
                     "access_token" => $tokenResponse->getAccessToken(),
                     "token_type" => $tokenResponse->getTokenType(),
                     "issue_time" => time(),
-                    "expires_in" => $tokenResponse->getExpiresIn()
+                    "expires_in" => $tokenResponse->getExpiresIn(),
                 )
             );
             $this->tokenStorage->storeAccessToken($accessToken);
@@ -161,7 +160,7 @@ class Callback
                         "user_id" => $state->getUserId(),
                         "scope" => $scope,
                         "refresh_token" => $tokenResponse->getRefreshToken(),
-                        "issue_time" => time()
+                        "issue_time" => time(),
                     )
                 );
                 $this->tokenStorage->storeRefreshToken($refreshToken);

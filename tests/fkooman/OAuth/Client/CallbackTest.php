@@ -18,9 +18,7 @@
 namespace fkooman\OAuth\Client;
 
 use PDO;
-
 use fkooman\OAuth\Common\Scope;
-
 use Guzzle\Http\Client;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
@@ -39,7 +37,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 "client_id" => "foo",
                 "client_secret" => "bar",
                 "authorize_endpoint" => "http://www.example.org/authorize",
-                "token_endpoint" => "http://www.example.org/token"
+                "token_endpoint" => "http://www.example.org/token",
             )
         );
 
@@ -65,7 +63,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                     array(
                         "access_token" => "my_access_token",
                         "token_type" => "BeArEr",
-                        "refresh_token" => "why_not_a_refresh_token"
+                        "refresh_token" => "why_not_a_refresh_token",
                     )
                 )
             )
@@ -78,7 +76,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 "client_config_id" => "foo",
                 "issue_time" => time() - 100,
                 "user_id" => "my_user_id",
-                "scope" => Scope::fromString("foo bar")
+                "scope" => Scope::fromString("foo bar"),
             )
         );
         $this->storage->storeState($state);
@@ -88,7 +86,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         $tokenResponse = $callback->handleCallback(
             array(
                 "state" => "my_state",
-                "code" => "my_code"
+                "code" => "my_code",
             )
         );
 

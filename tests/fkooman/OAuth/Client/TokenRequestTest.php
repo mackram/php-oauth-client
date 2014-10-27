@@ -41,7 +41,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "client_id" => "foo",
                 "client_secret" => "bar",
                 "authorize_endpoint" => "http://www.example.org/authorize",
-                "token_endpoint" => "http://www.example.org/token"
+                "token_endpoint" => "http://www.example.org/token",
             )
         );
 
@@ -52,7 +52,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "authorize_endpoint" => "http://www.example.org/authorize",
                 "token_endpoint" => "http://www.example.org/token",
                 "redirect_uri" => "http://foo.example.org/callback",
-                "credentials_in_request_body" => true
+                "credentials_in_request_body" => true,
             )
         );
 
@@ -63,7 +63,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "authorize_endpoint" => "http://www.example.org/authorize",
                 "token_endpoint" => "http://www.example.org/token",
                 "redirect_uri" => "http://foo.example.org/callback",
-                "allow_string_expires_in" => true
+                "allow_string_expires_in" => true,
             )
         );
 
@@ -74,7 +74,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "authorize_endpoint" => "http://www.example.org/authorize",
                 "token_endpoint" => "http://www.example.org/token",
                 "redirect_uri" => "http://foo.example.org/callback",
-                "use_array_scope" => true
+                "use_array_scope" => true,
             )
         );
 
@@ -85,14 +85,14 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
                 "authorize_endpoint" => "http://www.example.org/authorize",
                 "token_endpoint" => "http://www.example.org/token",
                 "redirect_uri" => "http://foo.example.org/callback",
-                "use_comma_separated_scope" => true
+                "use_comma_separated_scope" => true,
             )
         );
 
         $this->tokenResponse[] = json_encode(
             array(
                 "access_token" => "foo",
-                "token_type" => "Bearer"
+                "token_type" => "Bearer",
             )
         );
 
@@ -102,7 +102,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             array(
                 "access_token" => "foo",
                 "token_type" => "Bearer",
-                "expires_in" => "1200"
+                "expires_in" => "1200",
             )
         );
 
@@ -110,7 +110,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             array(
                 "access_token" => "foo",
                 "token_type" => "Bearer",
-                "scope" => array("foo", "bar")
+                "scope" => array("foo", "bar"),
             )
         );
 
@@ -118,7 +118,7 @@ class TokenRequestTest extends \PHPUnit_Framework_TestCase
             array(
                 "access_token" => "foo",
                 "token_type" => "Bearer",
-                "scope" => "foo,bar"
+                "scope" => "foo,bar",
             )
         );
     }
