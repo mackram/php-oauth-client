@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\TokenResponseException;
@@ -55,7 +54,7 @@ class TokenResponse
     public function setAccessToken($accessToken)
     {
         if (!is_string($accessToken) || 0 >= strlen($accessToken)) {
-            throw new TokenResponseException("access_token needs to be a non-empty string");
+            throw new TokenResponseException('access_token needs to be a non-empty string');
         }
         $this->accessToken = $accessToken;
     }
@@ -68,7 +67,7 @@ class TokenResponse
     public function setTokenType($tokenType)
     {
         if (!is_string($tokenType) || 0 >= strlen($tokenType)) {
-            throw new TokenResponseException("token_type needs to be a non-empty string");
+            throw new TokenResponseException('token_type needs to be a non-empty string');
         }
         $this->tokenType = $tokenType;
     }
@@ -81,7 +80,7 @@ class TokenResponse
     public function setExpiresIn($expiresIn)
     {
         if (!is_int($expiresIn) || 0 >= $expiresIn) {
-            throw new TokenResponseException("expires_in needs to be a positive integer");
+            throw new TokenResponseException('expires_in needs to be a positive integer');
         }
         $this->expiresIn = $expiresIn;
     }
@@ -94,7 +93,7 @@ class TokenResponse
     public function setRefreshToken($refreshToken)
     {
         if (!is_string($refreshToken) || 0 >= strlen($refreshToken)) {
-            throw new TokenResponseException("refresh_token needs to be a non-empty string");
+            throw new TokenResponseException('refresh_token needs to be a non-empty string');
         }
         $this->refreshToken = $refreshToken;
     }
@@ -108,7 +107,7 @@ class TokenResponse
     {
         $scope = Scope::fromString($scope);
         if ($scope->isEmpty()) {
-            throw new TokenResponseException("scope must be non empty");
+            throw new TokenResponseException('scope must be non empty');
         }
         $this->scope = $scope;
     }

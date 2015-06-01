@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\ClientConfigException;
@@ -30,12 +29,12 @@ class GitHubClientConfig extends ClientConfig implements ClientConfigInterface
         }
 
         $clientData = array(
-            "client_id" => $data['client_id'],
-            "client_secret" => $data['client_secret'],
-            "authorize_endpoint" => "https://github.com/login/oauth/authorize",
-            "token_endpoint" => "https://github.com/login/oauth/access_token",
-            "use_comma_separated_scope" => true,
-            "credentials_in_request_body" => true,
+            'client_id' => $data['client_id'],
+            'client_secret' => $data['client_secret'],
+            'authorize_endpoint' => 'https://github.com/login/oauth/authorize',
+            'token_endpoint' => 'https://github.com/login/oauth/access_token',
+            'use_comma_separated_scope' => true,
+            'credentials_in_request_body' => true,
         );
         parent::__construct($clientData);
     }

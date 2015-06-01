@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\TokenException;
@@ -40,7 +39,7 @@ class RefreshToken extends Token
     public function setRefreshToken($refreshToken)
     {
         if (!is_string($refreshToken) || 0 >= strlen($refreshToken)) {
-            throw new TokenException("refresh_token needs to be a non-empty string");
+            throw new TokenException('refresh_token needs to be a non-empty string');
         }
         $this->refreshToken = $refreshToken;
     }

@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 class TokenRequest
@@ -33,9 +32,9 @@ class TokenRequest
 
     public function withAuthorizationCode($authorizationCode)
     {
-        $p = array (
-            "code" => $authorizationCode,
-            "grant_type" => "authorization_code",
+        $p = array(
+            'code' => $authorizationCode,
+            'grant_type' => 'authorization_code',
         );
         if (null !== $this->clientConfig->getRedirectUri()) {
             $p['redirect_uri'] = $this->clientConfig->getRedirectUri();
@@ -46,9 +45,9 @@ class TokenRequest
 
     public function withRefreshToken($refreshToken)
     {
-        $p = array (
-            "refresh_token" => $refreshToken,
-            "grant_type" => "refresh_token",
+        $p = array(
+            'refresh_token' => $refreshToken,
+            'grant_type' => 'refresh_token',
         );
         // Some services require specifying the redirect_uri also when using
         // the refresh_token.
@@ -96,7 +95,7 @@ class TokenRequest
             // if the field "expires_in" has the value null, remove it
             // issue: https://github.com/fkooman/php-oauth-client/issues/17
             if ($this->clientConfig->getAllowNullExpiresIn()) {
-                if (is_array($responseData) && array_key_exists("expires_in", $responseData)) {
+                if (is_array($responseData) && array_key_exists('expires_in', $responseData)) {
                     if (null === $responseData['expires_in']) {
                         unset($responseData['expires_in']);
                     }
@@ -123,7 +122,7 @@ class TokenRequest
 
             if ($this->clientConfig->getUseCommaSeparatedScope()) {
                 if (is_array($responseData) && isset($responseData['scope'])) {
-                    $responseData['scope'] = str_replace(",", " ", $responseData['scope']);
+                    $responseData['scope'] = str_replace(',', ' ', $responseData['scope']);
                 }
             }
 
@@ -131,7 +130,7 @@ class TokenRequest
             if ($this->clientConfig->getUseArrayScope()) {
                 if (is_array($responseData) && isset($responseData['scope'])) {
                     if (is_array($responseData['scope'])) {
-                        $responseData['scope'] = implode(" ", $responseData['scope']);
+                        $responseData['scope'] = implode(' ', $responseData['scope']);
                     }
                 }
             }

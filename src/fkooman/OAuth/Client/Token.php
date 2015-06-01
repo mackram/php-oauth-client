@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\TokenException;
@@ -50,7 +49,7 @@ class Token
     public function setClientConfigId($clientConfigId)
     {
         if (!is_string($clientConfigId) || 0 >= strlen($clientConfigId)) {
-            throw new TokenException("client_config_id needs to be a non-empty string");
+            throw new TokenException('client_config_id needs to be a non-empty string');
         }
         $this->clientConfigId = $clientConfigId;
     }
@@ -63,7 +62,7 @@ class Token
     public function setUserId($userId)
     {
         if (!is_string($userId) || 0 >= strlen($userId)) {
-            throw new TokenException("client_config_id needs to be a non-empty string");
+            throw new TokenException('client_config_id needs to be a non-empty string');
         }
         $this->userId = $userId;
     }
@@ -86,7 +85,7 @@ class Token
     public function setIssueTime($issueTime)
     {
         if (!is_numeric($issueTime) || 0 >= $issueTime) {
-            throw new TokenException("issue_time should be positive integer");
+            throw new TokenException('issue_time should be positive integer');
         }
         $this->issueTime = (int) $issueTime;
     }

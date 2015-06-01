@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\ClientConfigException;
@@ -87,7 +86,7 @@ class ClientConfig implements ClientConfigInterface
     public function setClientId($clientId)
     {
         if (!is_string($clientId) || 0 >= strlen($clientId)) {
-            throw new ClientConfigException("client_id must be a non-empty string");
+            throw new ClientConfigException('client_id must be a non-empty string');
         }
         $this->validateUserPass($clientId);
         $this->clientId = $clientId;
@@ -102,7 +101,7 @@ class ClientConfig implements ClientConfigInterface
     {
         if (null !== $clientSecret) {
             if (!is_string($clientSecret) || 0 >= strlen($clientSecret)) {
-                throw new ClientConfigException("client_secret must be a non-empty string or null");
+                throw new ClientConfigException('client_secret must be a non-empty string or null');
             }
             $this->validateUserPass($clientSecret);
         }
@@ -163,7 +162,7 @@ class ClientConfig implements ClientConfigInterface
     {
         if (null !== $defaultTokenType) {
             if (!is_string($defaultTokenType) || 0 >= strlen($defaultTokenType)) {
-                throw new ClientConfigException("default_token_type must be a non-empty string or null");
+                throw new ClientConfigException('default_token_type must be a non-empty string or null');
             }
         }
         $this->defaultTokenType = $defaultTokenType;
@@ -178,7 +177,7 @@ class ClientConfig implements ClientConfigInterface
     {
         if (null !== $defaultServerScope) {
             if (!is_string($defaultServerScope) || 0 >= strlen($defaultServerScope)) {
-                throw new ClientConfigException("default_server_scope must be a non-empty string or null");
+                throw new ClientConfigException('default_server_scope must be a non-empty string or null');
             }
         }
         $this->defaultServerScope = $defaultServerScope;
@@ -252,21 +251,21 @@ class ClientConfig implements ClientConfigInterface
     private function validateUserPass($userPass)
     {
         if (1 !== preg_match(self::REGEXP_VSCHAR, $userPass)) {
-            throw new ClientConfigException("invalid characters in client_id or client_secret");
+            throw new ClientConfigException('invalid characters in client_id or client_secret');
         }
     }
 
     private function validateEndpointUri($endpointUri)
     {
         if (!is_string($endpointUri) || 0 >= strlen($endpointUri)) {
-            throw new ClientConfigException("uri must be a non-empty string");
+            throw new ClientConfigException('uri must be a non-empty string');
         }
         if (false === filter_var($endpointUri, FILTER_VALIDATE_URL)) {
-            throw new ClientConfigException("uri must be valid URL");
+            throw new ClientConfigException('uri must be valid URL');
         }
         // not allowed to have a fragment (#) in it
         if (null !== parse_url($endpointUri, PHP_URL_FRAGMENT)) {
-            throw new ClientConfigException("uri must not contain a fragment");
+            throw new ClientConfigException('uri must not contain a fragment');
         }
     }
 }

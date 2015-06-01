@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 class TokenResponseTest extends \PHPUnit_Framework_TestCase
@@ -23,32 +22,32 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     {
         $t = new TokenResponse(
             array(
-                "access_token" => "foo",
-                "token_type" => "Bearer",
-                "expires_in" => 5,
-                "scope" => "foo",
-                "refresh_token" => "bar",
-                "unsupported_key" => "foo",
+                'access_token' => 'foo',
+                'token_type' => 'Bearer',
+                'expires_in' => 5,
+                'scope' => 'foo',
+                'refresh_token' => 'bar',
+                'unsupported_key' => 'foo',
             )
         );
-        $this->assertEquals("foo", $t->getAccessToken());
-        $this->assertEquals("Bearer", $t->getTokenType());
+        $this->assertEquals('foo', $t->getAccessToken());
+        $this->assertEquals('Bearer', $t->getTokenType());
         $this->assertEquals(5, $t->getExpiresIn());
-        $this->assertEquals("bar", $t->getRefreshToken());
-        $this->assertEquals("foo", $t->getScope()->toString());
+        $this->assertEquals('bar', $t->getRefreshToken());
+        $this->assertEquals('foo', $t->getScope()->toString());
     }
 
     public function testScope()
     {
         $t = new TokenResponse(
             array(
-                "access_token" => "foo",
-                "token_type" => "Bearer",
-                "scope" => "foo bar baz baz",
+                'access_token' => 'foo',
+                'token_type' => 'Bearer',
+                'scope' => 'foo bar baz baz',
             )
         );
         // scope will be sorted de-duplicated string space separated
-        $this->assertEquals("bar baz foo", $t->getScope()->toString());
+        $this->assertEquals('bar baz foo', $t->getScope()->toString());
     }
 
     /**
@@ -59,9 +58,9 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     {
         $t = new TokenResponse(
             array(
-                "access_token" => "foo",
-                "token_type" => "Bearer",
-                "scope" => null,
+                'access_token' => 'foo',
+                'token_type' => 'Bearer',
+                'scope' => null,
             )
         );
     }
@@ -74,9 +73,9 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     {
         $t = new TokenResponse(
             array(
-                "access_token" => "foo",
-                "token_type" => "Bearer",
-                "scope" => "",
+                'access_token' => 'foo',
+                'token_type' => 'Bearer',
+                'scope' => '',
             )
         );
     }
@@ -89,9 +88,9 @@ class TokenResponseTest extends \PHPUnit_Framework_TestCase
     {
         $t = new TokenResponse(
             array(
-                "access_token" => "foo",
-                "token_type" => "Bearer",
-                "expires_in" => -5,
+                'access_token' => 'foo',
+                'token_type' => 'Bearer',
+                'expires_in' => -5,
             )
         );
     }

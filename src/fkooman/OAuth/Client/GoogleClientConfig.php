@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\ClientConfigException;
@@ -35,12 +34,12 @@ class GoogleClientConfig extends ClientConfig implements ClientConfigInterface
 
         // we map Google configuration to ClientConfig configuration
         $clientData = array(
-            "client_id" => $data['web']['client_id'],
-            "client_secret" => $data['web']['client_secret'],
-            "authorize_endpoint" => $data['web']['auth_uri'],
-            "token_endpoint" => $data['web']['token_uri'],
-            "redirect_uri" => $data['web']['redirect_uris'][0],
-            "credentials_in_request_body" => true,
+            'client_id' => $data['web']['client_id'],
+            'client_secret' => $data['web']['client_secret'],
+            'authorize_endpoint' => $data['web']['auth_uri'],
+            'token_endpoint' => $data['web']['token_uri'],
+            'redirect_uri' => $data['web']['redirect_uris'][0],
+            'credentials_in_request_body' => true,
         );
         parent::__construct($clientData);
     }

@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\TokenException;
@@ -40,7 +39,7 @@ class State extends Token
     public function setState($state)
     {
         if (!is_string($state) || 0 >= strlen($state)) {
-            throw new TokenException("state needs to be a non-empty string");
+            throw new TokenException('state needs to be a non-empty string');
         }
         $this->state = $state;
     }

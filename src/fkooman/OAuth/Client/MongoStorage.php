@@ -14,16 +14,14 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Common\Scope;
 
 /**
- * Class MongoStorage
+ * Class MongoStorage.
  *
  *  This is an implementation of the StorageInterface of the fkooman client for MongoDB storage.
- *
  */
 class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
 {
@@ -66,12 +64,12 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->insert(
             array(
                 'client_config_id' => $accessToken->getClientConfigId(),
-                'user_id'          => $accessToken->getUserId(),
-                'scope'            => $accessToken->getScope()->isEmpty() ? null : $accessToken->getScope()->toString(),
-                'access_token'     => $accessToken->getAccessToken(),
-                'token_type'       => $accessToken->getTokenType(),
-                'expires_in'       => $accessToken->getExpiresIn(),
-                'issue_time'       => $accessToken->getIssueTime(),
+                'user_id' => $accessToken->getUserId(),
+                'scope' => $accessToken->getScope()->isEmpty() ? null : $accessToken->getScope()->toString(),
+                'access_token' => $accessToken->getAccessToken(),
+                'token_type' => $accessToken->getTokenType(),
+                'expires_in' => $accessToken->getExpiresIn(),
+                'issue_time' => $accessToken->getIssueTime(),
             )
         );
 
@@ -84,8 +82,8 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->remove(
             array(
                 'client_config_id' => $accessToken->getClientConfigId(),
-                'user_id'          => $accessToken->getUserId(),
-                'access_token'     => $accessToken->getAccessToken(),
+                'user_id' => $accessToken->getUserId(),
+                'access_token' => $accessToken->getAccessToken(),
             )
         );
 
@@ -120,10 +118,10 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->insert(
             array(
                 'client_config_id' => $refreshToken->getClientConfigId(),
-                'user_id'          => $refreshToken->getUserId(),
-                'scope'            => $refreshToken->getScope()->isEmpty() ? null : $refreshToken->getScope()->toString(),
-                'refresh_token'    => $refreshToken->getRefreshToken(),
-                'issue_time'       => $refreshToken->getIssueTime(),
+                'user_id' => $refreshToken->getUserId(),
+                'scope' => $refreshToken->getScope()->isEmpty() ? null : $refreshToken->getScope()->toString(),
+                'refresh_token' => $refreshToken->getRefreshToken(),
+                'issue_time' => $refreshToken->getIssueTime(),
             )
         );
 
@@ -136,8 +134,8 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->remove(
             array(
                 'client_config_id' => $refreshToken->getClientConfigId(),
-                'user_id'          => $refreshToken->getUserId(),
-                'refresh_token'     => $refreshToken->getRefreshToken(),
+                'user_id' => $refreshToken->getUserId(),
+                'refresh_token' => $refreshToken->getRefreshToken(),
             )
         );
 
@@ -169,10 +167,10 @@ class MongoStorage implements \fkooman\OAuth\Client\StorageInterface
         $result = $collection->insert(
             array(
                 'client_config_id' => $state->getClientConfigId(),
-                'user_id'          => $state->getUserId(),
-                'scope'            => $state->getScope()->isEmpty() ? null : $state->getScope()->toString(),
-                'state'            => $state->getState(),
-                'issue_time'       => $state->getIssueTime(),
+                'user_id' => $state->getUserId(),
+                'scope' => $state->getScope()->isEmpty() ? null : $state->getScope()->toString(),
+                'state' => $state->getState(),
+                'issue_time' => $state->getIssueTime(),
             )
         );
 

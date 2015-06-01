@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\TokenException;
@@ -48,7 +47,7 @@ class AccessToken extends Token
     public function setAccessToken($accessToken)
     {
         if (!is_string($accessToken) || 0 >= strlen($accessToken)) {
-            throw new TokenException("access_token needs to be a non-empty string");
+            throw new TokenException('access_token needs to be a non-empty string');
         }
         $this->accessToken = $accessToken;
     }
@@ -61,10 +60,10 @@ class AccessToken extends Token
     public function setTokenType($tokenType)
     {
         if (!is_string($tokenType) || 0 >= strlen($tokenType)) {
-            throw new TokenException("token_type needs to be a non-empty string");
+            throw new TokenException('token_type needs to be a non-empty string');
         }
         // Google uses "Bearer" instead of "bearer", so we need to lowercase it...
-        if (!in_array(strtolower($tokenType), array("bearer"))) {
+        if (!in_array(strtolower($tokenType), array('bearer'))) {
             throw new TokenException(sprintf("unsupported token type '%s'", $tokenType));
         }
         $this->tokenType = $tokenType;
@@ -79,7 +78,7 @@ class AccessToken extends Token
     {
         if (null !== $expiresIn) {
             if (!is_numeric($expiresIn) || 0 >= $expiresIn) {
-                throw new TokenException("expires_in should be positive integer or null");
+                throw new TokenException('expires_in should be positive integer or null');
             }
             $expiresIn = (int) $expiresIn;
         }

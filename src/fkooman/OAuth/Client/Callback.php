@@ -14,11 +14,9 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use fkooman\OAuth\Client\Exception\CallbackException;
-
 // FIXME: replace AuthorizeException with CallbackException?
 use fkooman\OAuth\Client\Exception\AuthorizeException;
 use Guzzle\Http\Client;
@@ -45,7 +43,7 @@ class Callback
     public function setClientConfigId($clientConfigId)
     {
         if (!is_string($clientConfigId) || 0 >= strlen($clientConfigId)) {
-            throw new CallbackException("clientConfigId should be a non-empty string");
+            throw new CallbackException('clientConfigId should be a non-empty string');
         }
         $this->clientConfigId = $clientConfigId;
     }
@@ -93,21 +91,21 @@ class Callback
         $queryErrorDescription = isset($query['error_description']) ? $query['error_description'] : null;
 
         if (null === $queryState) {
-            throw new CallbackException("state parameter missing");
+            throw new CallbackException('state parameter missing');
         }
         $state = $this->tokenStorage->getState($this->clientConfigId, $queryState);
         if (false === $state) {
-            throw new CallbackException("state not found");
+            throw new CallbackException('state not found');
         }
 
         // avoid race condition for state by really needing a confirmation
         // that it was deleted
         if (false === $this->tokenStorage->deleteState($state)) {
-            throw new CallbackException("state already used");
+            throw new CallbackException('state already used');
         }
 
         if (null === $queryCode && null === $queryError) {
-            throw new CallbackException("both code and error parameter missing");
+            throw new CallbackException('both code and error parameter missing');
         }
 
         if (null !== $queryError) {
@@ -119,7 +117,7 @@ class Callback
             $t = new TokenRequest($this->httpClient, $this->clientConfig);
             $tokenResponse = $t->withAuthorizationCode($queryCode);
             if (false === $tokenResponse) {
-                throw new CallbackException("unable to fetch access token with authorization code");
+                throw new CallbackException('unable to fetch access token with authorization code');
             }
 
             if (null === $tokenResponse->getScope()) {
@@ -133,20 +131,20 @@ class Callback
                     // FIXME: we need to implement a way to request certain
                     // scope as being optional, while others need to be
                     // required
-                    throw new CallbackException("requested scope not obtained");
+                    throw new CallbackException('requested scope not obtained');
                 }
             }
 
             // store the access token
             $accessToken = new AccessToken(
                 array(
-                    "client_config_id" => $this->clientConfigId,
-                    "user_id" => $state->getUserId(),
-                    "scope" => $scope,
-                    "access_token" => $tokenResponse->getAccessToken(),
-                    "token_type" => $tokenResponse->getTokenType(),
-                    "issue_time" => time(),
-                    "expires_in" => $tokenResponse->getExpiresIn(),
+                    'client_config_id' => $this->clientConfigId,
+                    'user_id' => $state->getUserId(),
+                    'scope' => $scope,
+                    'access_token' => $tokenResponse->getAccessToken(),
+                    'token_type' => $tokenResponse->getTokenType(),
+                    'issue_time' => time(),
+                    'expires_in' => $tokenResponse->getExpiresIn(),
                 )
             );
             $this->tokenStorage->storeAccessToken($accessToken);
@@ -156,11 +154,11 @@ class Callback
             if (null !== $tokenResponse->getRefreshToken()) {
                 $refreshToken = new RefreshToken(
                     array(
-                        "client_config_id" => $this->clientConfigId,
-                        "user_id" => $state->getUserId(),
-                        "scope" => $scope,
-                        "refresh_token" => $tokenResponse->getRefreshToken(),
-                        "issue_time" => time(),
+                        'client_config_id' => $this->clientConfigId,
+                        'user_id' => $state->getUserId(),
+                        'scope' => $scope,
+                        'refresh_token' => $tokenResponse->getRefreshToken(),
+                        'issue_time' => time(),
                     )
                 );
                 $this->tokenStorage->storeRefreshToken($refreshToken);

@@ -14,14 +14,13 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 class SessionStorage implements StorageInterface
 {
     public function __construct()
     {
-        if ("" === session_id()) {
+        if ('' === session_id()) {
             // no session currently exists, start a new one
             session_start();
         }

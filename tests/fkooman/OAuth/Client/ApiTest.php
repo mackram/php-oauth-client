@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use PDO;
@@ -37,10 +36,10 @@ class ApiTest extends \PHPUnit_Framework_TestCase
 
         $this->clientConfig[] = new ClientConfig(
             array(
-                "client_id" => "foo",
-                "client_secret" => "bar",
-                "authorize_endpoint" => "http://www.example.org/authorize",
-                "token_endpoint" => "http://www.example.org/token",
+                'client_id' => 'foo',
+                'client_secret' => 'bar',
+                'authorize_endpoint' => 'http://www.example.org/authorize',
+                'token_endpoint' => 'http://www.example.org/token',
             )
         );
 
@@ -61,11 +60,11 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $mock->addResponse(new Response(200));
         $client->addSubscriber($mock);
 
-        $api = new Api("foo", $this->clientConfig[0], $this->storage, $client);
-        $context = new Context("a_user", array("foo", "bar"));
+        $api = new Api('foo', $this->clientConfig[0], $this->storage, $client);
+        $context = new Context('a_user', array('foo', 'bar'));
 
         $this->assertFalse($api->getAccessToken($context));
-        $this->assertEquals("http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=bar+foo", $api->getAuthorizeUri($context, "my_custom_state"));
+        $this->assertEquals('http://www.example.org/authorize?client_id=foo&response_type=code&state=my_custom_state&scope=bar+foo', $api->getAuthorizeUri($context, 'my_custom_state'));
     }
 
     public function testGetAccessTokenWithToken()
@@ -75,24 +74,24 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $mock->addResponse(new Response(200));
         $client->addSubscriber($mock);
 
-        $api = new Api("foo", $this->clientConfig[0], $this->storage, $client);
-        $context = new Context("a_user", array("foo", "bar"));
+        $api = new Api('foo', $this->clientConfig[0], $this->storage, $client);
+        $context = new Context('a_user', array('foo', 'bar'));
 
         $accessToken = new AccessToken(
             array(
-                "client_config_id" => "foo",
-                "user_id" => "a_user",
-                "token_type" => "bearer",
-                "access_token" => "my_token_value",
-                "scope" => Scope::fromString("foo bar"),
-                "issue_time" => time() - 100,
-                "expires_in" => 3600,
+                'client_config_id' => 'foo',
+                'user_id' => 'a_user',
+                'token_type' => 'bearer',
+                'access_token' => 'my_token_value',
+                'scope' => Scope::fromString('foo bar'),
+                'issue_time' => time() - 100,
+                'expires_in' => 3600,
             )
         );
         $this->storage->storeAccessToken($accessToken);
 
         $accessToken = $api->getAccessToken($context);
-        $this->assertEquals("my_token_value", $accessToken->getAccessToken());
+        $this->assertEquals('my_token_value', $accessToken->getAccessToken());
     }
 
     public function testGetAccessTokenWithExpiredAccessTokenAndRefreshToken()
@@ -105,43 +104,43 @@ class ApiTest extends \PHPUnit_Framework_TestCase
                 null,
                 json_encode(
                     array(
-                        "access_token" => "my_new_access_token_value",
-                        "token_type" => "Bearer",
+                        'access_token' => 'my_new_access_token_value',
+                        'token_type' => 'Bearer',
                     )
                 )
             )
         );
         $client->addSubscriber($mock);
 
-        $api = new Api("foo", $this->clientConfig[0], $this->storage, $client);
-        $context = new Context("a_user", array("foo", "bar"));
+        $api = new Api('foo', $this->clientConfig[0], $this->storage, $client);
+        $context = new Context('a_user', array('foo', 'bar'));
 
         $accessToken = new AccessToken(
             array(
-                "client_config_id" => "foo",
-                "user_id" => "a_user",
-                "token_type" => "bearer",
-                "access_token" => "my_token_value",
-                "scope" => Scope::fromString("foo bar"),
-                "issue_time" => time() - 4000,
-                "expires_in" => 3600,
+                'client_config_id' => 'foo',
+                'user_id' => 'a_user',
+                'token_type' => 'bearer',
+                'access_token' => 'my_token_value',
+                'scope' => Scope::fromString('foo bar'),
+                'issue_time' => time() - 4000,
+                'expires_in' => 3600,
             )
         );
         $this->storage->storeAccessToken($accessToken);
 
         $refreshToken = new RefreshToken(
             array(
-                "client_config_id" => "foo",
-                "user_id" => "a_user",
-                "refresh_token" => "my_refresh_token_value",
-                "scope" => Scope::fromString("foo bar"),
-                "issue_time" => time() - 10000,
+                'client_config_id' => 'foo',
+                'user_id' => 'a_user',
+                'refresh_token' => 'my_refresh_token_value',
+                'scope' => Scope::fromString('foo bar'),
+                'issue_time' => time() - 10000,
             )
         );
         $this->storage->storeRefreshToken($refreshToken);
 
         $accessToken = $api->getAccessToken($context);
-        $this->assertEquals("my_new_access_token_value", $accessToken->getAccessToken());
+        $this->assertEquals('my_new_access_token_value', $accessToken->getAccessToken());
         //$this->assertFalse($accessToken);
     }
 }

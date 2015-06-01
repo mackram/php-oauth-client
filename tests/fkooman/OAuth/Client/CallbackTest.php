@@ -14,7 +14,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace fkooman\OAuth\Client;
 
 use PDO;
@@ -34,10 +33,10 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
 
         $this->clientConfig[] = new ClientConfig(
             array(
-                "client_id" => "foo",
-                "client_secret" => "bar",
-                "authorize_endpoint" => "http://www.example.org/authorize",
-                "token_endpoint" => "http://www.example.org/token",
+                'client_id' => 'foo',
+                'client_secret' => 'bar',
+                'authorize_endpoint' => 'http://www.example.org/authorize',
+                'token_endpoint' => 'http://www.example.org/token',
             )
         );
 
@@ -61,9 +60,9 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
                 null,
                 json_encode(
                     array(
-                        "access_token" => "my_access_token",
-                        "token_type" => "BeArEr",
-                        "refresh_token" => "why_not_a_refresh_token",
+                        'access_token' => 'my_access_token',
+                        'token_type' => 'BeArEr',
+                        'refresh_token' => 'why_not_a_refresh_token',
                     )
                 )
             )
@@ -72,24 +71,24 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
 
         $state = new State(
             array(
-                "state" => "my_state",
-                "client_config_id" => "foo",
-                "issue_time" => time() - 100,
-                "user_id" => "my_user_id",
-                "scope" => Scope::fromString("foo bar"),
+                'state' => 'my_state',
+                'client_config_id' => 'foo',
+                'issue_time' => time() - 100,
+                'user_id' => 'my_user_id',
+                'scope' => Scope::fromString('foo bar'),
             )
         );
         $this->storage->storeState($state);
 
-        $callback = new Callback("foo", $this->clientConfig[0], $this->storage, $client);
+        $callback = new Callback('foo', $this->clientConfig[0], $this->storage, $client);
 
         $tokenResponse = $callback->handleCallback(
             array(
-                "state" => "my_state",
-                "code" => "my_code",
+                'state' => 'my_state',
+                'code' => 'my_code',
             )
         );
 
-        $this->assertEquals("my_access_token", $tokenResponse->getAccessToken());
+        $this->assertEquals('my_access_token', $tokenResponse->getAccessToken());
     }
 }
