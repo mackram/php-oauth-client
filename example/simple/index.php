@@ -2,6 +2,8 @@
 
 require_once 'vendor/autoload.php';
 
+$introspection = 'http://localhost/php-oauth-as/introspect.php';
+
 $clientConfig = new fkooman\OAuth\Client\ClientConfig(
     array(
         'authorize_endpoint' => 'http://localhost/php-oauth-as/authorize.php',
@@ -27,7 +29,12 @@ if (false === $accessToken) {
 
 try {
     $client = new Guzzle\Http\Client();
-    echo 'Access Token: '.$accessToken->getAccessToken();
+    echo 'Access Token: '.$accessToken->getAccessToken().PHP_EOL.PHP_EOL;
+
+    $request = $client->post($introspection, array(), array('token' => $accessToken->getAccessToken()));
+    $response = $request->send();
+    header('Content-Type: text/plain');
+    echo $response->getBody();
 } catch (fkooman\Guzzle\Plugin\BearerAuth\Exception\BearerErrorResponseException $e) {
     if ('invalid_token' === $e->getBearerReason()) {
         // the token we used was invalid, possibly revoked, we throw it away
