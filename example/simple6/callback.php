@@ -6,7 +6,6 @@ use fkooman\OAuth\Client\Guzzle6Client;
 use fkooman\OAuth\Client\ClientConfig;
 use fkooman\OAuth\Client\SessionStorage;
 use fkooman\OAuth\Client\Callback;
-use fkooman\OAuth\Client\Context;
 
 $clientConfig = new ClientConfig(
     array(
