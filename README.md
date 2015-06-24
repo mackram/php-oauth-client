@@ -65,7 +65,7 @@ Below is a simple example `composer.json` file you could use:
     {
         "name": "fkooman/my-demo-oauth-app",
         "require": {
-            "fkooman/php-oauth-client": "dev-master"
+            "fkooman/oauth-client": "dev-master"
         }
     }
 
