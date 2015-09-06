@@ -26,7 +26,7 @@ class TokenResponse
     private $expiresIn;
     private $refreshToken;
     private $scope;
-    private $allData
+    private $allData;
 
     public function __construct(array $data)
     {
