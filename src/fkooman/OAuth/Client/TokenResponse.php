@@ -26,6 +26,7 @@ class TokenResponse
     private $expiresIn;
     private $refreshToken;
     private $scope;
+    private $allData
 
     public function __construct(array $data)
     {
@@ -49,8 +50,13 @@ class TokenResponse
         if (array_key_exists('scope', $data)) {
             $this->setScope($data['scope']);
         }
+        $this->allData = $data;
     }
 
+    public function getAllData(){
+        return $this->allData;
+    }
+    
     public function setAccessToken($accessToken)
     {
         if (!is_string($accessToken) || 0 >= strlen($accessToken)) {

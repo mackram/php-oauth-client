@@ -13,7 +13,7 @@
     },
     "description": "PHP OAuth 2.0 Client",
     "license": "LGPL-3.0+",
-    "name": "fkooman/oauth-client",
+    "name": "mac/oauth-client",
     "require": {
         "ext-date": "*",
         "ext-filter": "*",

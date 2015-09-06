@@ -29,6 +29,9 @@ class AccessToken extends Token
     /** expires_in INTEGER DEFAULT NULL */
     private $expiresIn;
 
+
+    private $responseAllData;
+    
     public function __construct(array $data)
     {
         parent::__construct($data);
@@ -42,8 +45,14 @@ class AccessToken extends Token
         $this->setTokenType($data['token_type']);
         $expiresIn = array_key_exists('expires_in', $data) ? $data['expires_in'] : null;
         $this->setExpiresIn($expiresIn);
+        $this->responseAllData =  array_key_exists('response_data', $data) ? $data['response_data'] : null;
     }
 
+
+    public function getResponseData(){
+        return $this->responseAllData;
+    }
+    
     public function setAccessToken($accessToken)
     {
         if (!is_string($accessToken) || 0 >= strlen($accessToken)) {

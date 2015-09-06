@@ -142,6 +142,7 @@ class Callback
                     'client_config_id' => $this->clientConfigId,
                     'user_id' => $state->getUserId(),
                     'scope' => $scope,
+                    'response_data' => $tokenResponse->getAllData(),
                     'access_token' => $tokenResponse->getAccessToken(),
                     'token_type' => $tokenResponse->getTokenType(),
                     'issue_time' => time(),
